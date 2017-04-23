@@ -1,0 +1,76 @@
+﻿<Window x:Class="Version_1.Proposition"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Пропозиції" Height="350" Width="450"
+        MinHeight="350" MinWidth="450">
+    <!--                 
+                Cursor="../../Images/Pointer_hand.cur"!-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="29*"/>
+            <RowDefinition Height="46*"/>
+            <RowDefinition Height="39*"/>
+            <RowDefinition Height="39*"/>
+            <RowDefinition Height="127*"/>
+            <RowDefinition Height="40*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="137*"/>
+            <ColumnDefinition Width="75*"/>
+            <ColumnDefinition Width="109*"/>
+            <ColumnDefinition Width="121*"/>
+        </Grid.ColumnDefinitions>
+        <Menu Name="Menubar" HorizontalContentAlignment="Center" VerticalAlignment="Top" Grid.ColumnSpan="3" Height="27">
+            <MenuItem Name="StudItem" Header="Студент" HorizontalAlignment="Left" Margin="0,3,0,0">
+                <MenuItem Header="Пошта"></MenuItem>
+                <MenuItem Header="Завдання"></MenuItem>
+                <MenuItem Header="Сповіщення"></MenuItem>
+                <MenuItem Header="Пропозиції"></MenuItem>
+                <MenuItem Header="Звіти профорга"></MenuItem>
+                <MenuItem Header="Контакти"></MenuItem>
+                <MenuItem Header="" IsEnabled="False"></MenuItem>
+                <MenuItem Header="Налаштування..."></MenuItem>
+            </MenuItem>
+            <MenuItem Name="EmissItem" Header="Профорг" HorizontalAlignment="Left" Margin="0,3,0,0">
+                <MenuItem Header="Пошта"></MenuItem>
+                <MenuItem Header="Інструментарій">
+                    <MenuItem Header="Планувальник"></MenuItem>
+                    <MenuItem Header="Прогресс"></MenuItem>
+                    <MenuItem Header="Мої звіти"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Сповіщення"></MenuItem>
+                <MenuItem Header="Пропозиції"></MenuItem>
+                <MenuItem Header="Контакти"></MenuItem>
+                <MenuItem Header="" IsEnabled="False"></MenuItem>
+                <MenuItem Header="Налаштування..."></MenuItem>
+            </MenuItem>
+            <MenuItem Name="CuraItem" Header="Куратор" HorizontalAlignment="Left" BorderThickness="0" Margin="0,3,0,0">
+                <MenuItem Header="Пошта"></MenuItem>
+                <MenuItem Header="Задачі"></MenuItem>
+                <MenuItem Header="Контакти"></MenuItem>
+                <MenuItem Header="" IsEnabled="False"></MenuItem>
+                <MenuItem Header="Налаштування..."></MenuItem>
+            </MenuItem>
+
+        </Menu>
+        <Menu Grid.Column="3" HorizontalContentAlignment="Center" Height="27" VerticalAlignment="Top">
+            <MenuItem Header="Регістрація" HorizontalAlignment="Right" Margin="0,3,0,0" BorderThickness="0"/>
+            <MenuItem Header="Вхід" HorizontalAlignment="Right" Margin="0,3,0,0" BorderThickness="0"/>
+            <MenuItem Header="Вихід" HorizontalAlignment="Right" BorderThickness="0" Margin="0,3,0,0" Visibility="Hidden"/>
+        </Menu>
+        <ListBox HorizontalContentAlignment="Left" Grid.Row="1" VerticalContentAlignment="Top" Grid.RowSpan="5" Margin="0,0,0,10"/>
+        <DatePicker Grid.Column="2" HorizontalAlignment="Left" Height="26" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="210" IsEnabled="False" Grid.ColumnSpan="2"/>
+        <CheckBox Content="Ціна:" Grid.Column="1" HorizontalAlignment="Left" Height="19" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="55"/>
+        <CheckBox Content="Дата:" Grid.Column="1" HorizontalAlignment="Left" Height="19" Margin="10,14,0,0" Grid.Row="1" VerticalAlignment="Top" Width="55"/>
+        <CheckBox Content="Місце:" Grid.Column="1" HorizontalAlignment="Left" Height="19" Margin="10,10,0,0" Grid.Row="3" VerticalAlignment="Top" Width="55"/>
+        <TextBox Name="Comm" Grid.ColumnSpan="3" Grid.Column="1" HorizontalAlignment="Left" Height="107" Margin="10,10,0,0" Grid.Row="4" TextWrapping="Wrap" Text="Коментар" VerticalAlignment="Top" Width="275" TextChanged="TextBox_TextChanged" FocusableChanged="Comm_FocusableChanged" GotFocus="Comm_GotFocus" LostFocus="Comm_LostFocus"/>
+        <TextBox Grid.Column="2" HorizontalAlignment="Left" Height="19" Margin="10,10,0,0" Grid.Row="2" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="89" IsEnabled="False"/>
+        <CheckBox Content="З учасника" Grid.Column="3" HorizontalAlignment="Left" Height="19" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="101" IsEnabled="False"/>
+        <TextBox Grid.Column="2" HorizontalAlignment="Left" Height="19" Margin="10,10,0,0" Grid.Row="3" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="210" IsEnabled="False" Grid.ColumnSpan="2"/>
+        <Button Content="Button" Grid.Column="3" HorizontalAlignment="Left" Height="20" Margin="10,10,0,0" Grid.Row="5" VerticalAlignment="Top" Width="101"/>
+        <Button Content="Button" Grid.Column="2" HorizontalAlignment="Left" Height="20" Margin="10,10,0,0" Grid.Row="5" VerticalAlignment="Top" Width="89"/>
+
+
+    </Grid>
+</Window>
