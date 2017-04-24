@@ -22,8 +22,17 @@ namespace Version_1
     {
         public NewTask()
         {
-            // MainGrid.Background = 
+            InitPics();
             InitializeComponent();
+
+        }
+
+        public NewTask(string st1, string st2)
+        {
+            InitPics();
+            FillForm(st1, st2);
+            InitializeComponent();
+            MouseDown += Window_MouseDown;
         }
 
         ////////////////////////////////
@@ -42,8 +51,17 @@ namespace Version_1
         ///   FUNCTIONS_SECTION   /////////////////////////////////////////////////////////////////////////////
         /////////////////////////////
 
+        private void FillForm(string st1, string st2)
+        {
+            Topic.Text = st1;
+            Content.Text = st2;
+        }
 
-
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                DragMove();
+        }
 
         ////////////////////////////////
         ///   MENU_INITS+FUNCTIONS   /////////////////////////////////////////////////////////////////////////////
@@ -76,7 +94,7 @@ namespace Version_1
                 Uri iconUri = new Uri("./Images/Icon.ico", UriKind.RelativeOrAbsolute);
                 this.Icon = BitmapFrame.Create(iconUri);
                 ImageBrush myBrush = new ImageBrush();
-                myBrush.ImageSource = new BitmapImage(new Uri("./Images/Village.jpg", UriKind.Relative));
+                myBrush.ImageSource = new BitmapImage(new Uri("./Images/Scroll.png", UriKind.Relative));
                 this.Background = myBrush;
                 this.Cursor = new Cursor(Directory.GetCurrentDirectory() + "@/./Images/Pointer_hand.cur");
             }
@@ -87,7 +105,7 @@ namespace Version_1
                     Uri iconUri = new Uri("../../Images/Icon.ico", UriKind.RelativeOrAbsolute);
                     this.Icon = BitmapFrame.Create(iconUri);
                     ImageBrush myBrush = new ImageBrush();
-                    myBrush.ImageSource = new BitmapImage(new Uri("../../Images/Village.jpg", UriKind.Relative));
+                    myBrush.ImageSource = new BitmapImage(new Uri("../../Images/Scroll.png", UriKind.Relative));
                     this.Background = myBrush;
                     this.Cursor = new Cursor(Directory.GetCurrentDirectory() + "@/../../Images/Pointer_hand.cur");
                 }
@@ -96,11 +114,12 @@ namespace Version_1
                     Uri iconUri = new Uri("../Images/Icon.ico", UriKind.RelativeOrAbsolute);
                     this.Icon = BitmapFrame.Create(iconUri);
                     ImageBrush myBrush = new ImageBrush();
-                    myBrush.ImageSource = new BitmapImage(new Uri("../Images/Village.jpg", UriKind.Relative));
+                    myBrush.ImageSource = new BitmapImage(new Uri("../Images/Scroll.png", UriKind.Relative));
                     this.Background = myBrush;
                     this.Cursor = new Cursor(Directory.GetCurrentDirectory() + "@/../Images/Pointer_hand.cur");
                 }
             }
         }
+
     }
 }
