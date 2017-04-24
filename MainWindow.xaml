@@ -1,0 +1,59 @@
+﻿<Window x:Class="Version_1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Головна" Height="350" Width="450"
+        MinHeight="350" MinWidth="450">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="29*"/>
+            <RowDefinition Height="291*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="111*"/>
+            <ColumnDefinition Width="60*"/>
+        </Grid.ColumnDefinitions>
+        <Menu Name="Menubar" HorizontalContentAlignment="Center" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="27">
+            <MenuItem Name="StudItem" Header="Студент" HorizontalAlignment="Left" Margin="0,3,0,0">
+                <MenuItem Name="Post" Header="Пошта"></MenuItem>
+                <MenuItem Name="Task" Header="Завдання"></MenuItem>
+                <MenuItem Name="Warn" Header="Сповіщення"></MenuItem>
+                <MenuItem Name="Propos" Header="Пропозиції"></MenuItem>
+                <MenuItem Name="Report" Header="Звіти профорга"></MenuItem>
+                <MenuItem Name="Cont" Header="Контакти"></MenuItem>
+                <MenuItem Header="" IsEnabled="False"></MenuItem>
+                <MenuItem Name="Sett" Header="Налаштування..." Click="Sett_Click"></MenuItem>
+            </MenuItem>
+            <MenuItem Name="EmissItem" Header="Профорг" HorizontalAlignment="Left" Margin="0,3,0,0" Click="EmissItem_Click">
+                <MenuItem Name="Post1" Header="Пошта"></MenuItem>
+                <MenuItem Name="Tools" Header="Інструментарій">
+                    <MenuItem Name="Planer" Header="Планувальник"></MenuItem>
+                    <MenuItem Name="Progr" Header="Прогресс"></MenuItem>
+                    <MenuItem Name="MyRep" Header="Мої звіти"></MenuItem>
+                </MenuItem>
+                <MenuItem Name="Warn1" Header="Сповіщення"></MenuItem>
+                <MenuItem Name="Propos1" Header="Пропозиції"></MenuItem>
+                <MenuItem Name="Cont1" Header="Контакти"></MenuItem>
+                <MenuItem Header="" IsEnabled="False"></MenuItem>
+                <MenuItem Name="Sett1" Header="Налаштування..."  Click="Sett_Click"></MenuItem>
+            </MenuItem>
+            <MenuItem Name="CuraItem" Header="Куратор" HorizontalAlignment="Left" BorderThickness="0" Margin="0,3,0,0">
+                <MenuItem Name="Post2" Header="Пошта"></MenuItem>
+                <MenuItem Name="Task2" Header="Задачі"></MenuItem>
+                <MenuItem Name="Cont2" Header="Контакти"></MenuItem>
+                <MenuItem Header="" IsEnabled="False"></MenuItem>
+                <MenuItem Name="Sett3" Header="Налаштування..."  Click="Sett_Click"></MenuItem>
+            </MenuItem>
+
+        </Menu>
+        <Menu Grid.Column="2" HorizontalContentAlignment="Center" Height="27" VerticalAlignment="Top">
+            <MenuItem Name="Reg" Header="Регістрація" HorizontalAlignment="Right" Margin="0,3,0,0" BorderThickness="0"/>
+            <MenuItem Name="Entr" Header="Вхід" HorizontalAlignment="Right" Margin="0,3,0,0" BorderThickness="0"/>
+            <MenuItem Name="Ext" Header="Вихід" HorizontalAlignment="Right" BorderThickness="0" Margin="0,3,0,0" Visibility="Hidden"/>
+        </Menu>
+
+    </Grid>
+
+</Window>
