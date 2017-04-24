@@ -19,41 +19,41 @@
         </Grid.ColumnDefinitions>
         <Menu Name="Menubar" HorizontalContentAlignment="Center" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="27">
             <MenuItem Name="StudItem" Header="Студент" HorizontalAlignment="Left" Margin="0,3,0,0">
-                <MenuItem Name="Post" Header="Пошта"></MenuItem>
-                <MenuItem Name="Task" Header="Завдання"></MenuItem>
-                <MenuItem Name="Warn" Header="Сповіщення"></MenuItem>
-                <MenuItem Name="Propos" Header="Пропозиції"></MenuItem>
-                <MenuItem Name="Report" Header="Звіти профорга"></MenuItem>
-                <MenuItem Name="Cont" Header="Контакти"></MenuItem>
+                <MenuItem Name="Post" Header="Пошта" HorizontalAlignment="Right" Width="178" Click="Post_Click"/>
+                <MenuItem Name="Task" Header="Завдання" Click="Task_Click"></MenuItem>
+                <MenuItem Name="Warn" Header="Сповіщення" Click="Warn_Click"></MenuItem>
+                <MenuItem Name="Propos" Header="Пропозиції" Click="Propos_Click"></MenuItem>
+                <MenuItem Name="Report" Header="Звіти профорга" Click="Report_Click"></MenuItem>
+                <MenuItem Name="Cont" Header="Контакти" Click="Cont_Click"></MenuItem>
                 <MenuItem Header="" IsEnabled="False"></MenuItem>
                 <MenuItem Name="Sett" Header="Налаштування..." Click="Sett_Click"></MenuItem>
             </MenuItem>
-            <MenuItem Name="EmissItem" Header="Профорг" HorizontalAlignment="Left" Margin="0,3,0,0" Click="EmissItem_Click">
-                <MenuItem Name="Post1" Header="Пошта"></MenuItem>
-                <MenuItem Name="Tools" Header="Інструментарій">
-                    <MenuItem Name="Planer" Header="Планувальник"></MenuItem>
-                    <MenuItem Name="Progr" Header="Прогресс"></MenuItem>
-                    <MenuItem Name="MyRep" Header="Мої звіти"></MenuItem>
+            <MenuItem Name="EmissItem" Header="Профорг" HorizontalAlignment="Left" Margin="0,3,0,0" >
+                <MenuItem Name="Post1" Header="Пошта" Click="Post_Click"></MenuItem>
+                <MenuItem Name="Tools" Header="Інструментарій" Click="Tools_Click">
+                    <MenuItem Name="Planer" Header="Планувальник" Click="Planer_Click"></MenuItem>
+                    <MenuItem Name="Progr" Header="Прогресс" Click="Progr_Click"></MenuItem>
+                    <MenuItem Name="MyRep" Header="Мої звіти" Click="MyRep_Click"></MenuItem>
                 </MenuItem>
-                <MenuItem Name="Warn1" Header="Сповіщення"></MenuItem>
-                <MenuItem Name="Propos1" Header="Пропозиції"></MenuItem>
-                <MenuItem Name="Cont1" Header="Контакти"></MenuItem>
+                <MenuItem Name="Warn1" Header="Сповіщення" Click="Warn_Click"></MenuItem>
+                <MenuItem Name="ProposProf" Header="Пропозиції" Click="ProposProf_Click" ></MenuItem>
+                <MenuItem Name="Cont1" Header="Контакти" Click="Cont_Click"></MenuItem>
                 <MenuItem Header="" IsEnabled="False"></MenuItem>
                 <MenuItem Name="Sett1" Header="Налаштування..."  Click="Sett_Click"></MenuItem>
             </MenuItem>
             <MenuItem Name="CuraItem" Header="Куратор" HorizontalAlignment="Left" BorderThickness="0" Margin="0,3,0,0">
-                <MenuItem Name="Post2" Header="Пошта"></MenuItem>
-                <MenuItem Name="Task2" Header="Задачі"></MenuItem>
-                <MenuItem Name="Cont2" Header="Контакти"></MenuItem>
+                <MenuItem Name="Post2" Header="Пошта" Click="Post_Click"></MenuItem>
+                <MenuItem Name="TaskCur" Header="Задачі" Click="TaskCur_Click"></MenuItem>
+                <MenuItem Name="Cont2" Header="Контакти" Click="Cont_Click"></MenuItem>
                 <MenuItem Header="" IsEnabled="False"></MenuItem>
                 <MenuItem Name="Sett3" Header="Налаштування..."  Click="Sett_Click"></MenuItem>
             </MenuItem>
 
         </Menu>
         <Menu Grid.Column="2" HorizontalContentAlignment="Center" Height="27" VerticalAlignment="Top">
-            <MenuItem Name="Reg" Header="Регістрація" HorizontalAlignment="Right" Margin="0,3,0,0" BorderThickness="0"/>
-            <MenuItem Name="Entr" Header="Вхід" HorizontalAlignment="Right" Margin="0,3,0,0" BorderThickness="0"/>
-            <MenuItem Name="Ext" Header="Вихід" HorizontalAlignment="Right" BorderThickness="0" Margin="0,3,0,0" Visibility="Hidden"/>
+            <MenuItem Name="Reg" Header="Регістрація" HorizontalAlignment="Right" Margin="0,3,0,0" BorderThickness="0" Click="Reg_Click"/>
+            <MenuItem Name="Entr" Header="Вхід" HorizontalAlignment="Right" Margin="0,3,0,0" BorderThickness="0" Click="Entr_Click"/>
+            <MenuItem Name="Ext" Header="Вихід" HorizontalAlignment="Right" BorderThickness="0" Margin="0,3,0,0" Visibility="Hidden" Click="Ext_Click"/>
         </Menu>
 
     </Grid>

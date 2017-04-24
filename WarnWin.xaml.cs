@@ -48,21 +48,86 @@ namespace Version_1
         ///   MENU_INITS+FUNCTIONS   /////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////
 
-        private void StudItem_Click(object sender, RoutedEventArgs e)
-        {
+            private void Post_Click(object sender, RoutedEventArgs e)
+            {
 
-        }
+            }
 
-        private void Sett_Click(object sender, RoutedEventArgs e)
-        {
-            Settings modalWindow = new Settings();
-            modalWindow.ShowDialog();
-        }
+            private void Task_Click(object sender, RoutedEventArgs e)
+            {
 
-        private void EmissItem_Click(object sender, RoutedEventArgs e)
-        {
+            }
 
-        }
+            private void Warn_Click(object sender, RoutedEventArgs e)
+            {
+
+            }
+
+            private void Propos_Click(object sender, RoutedEventArgs e)
+            {
+
+            }
+
+            private void Report_Click(object sender, RoutedEventArgs e)
+            {
+
+            }
+
+            private void Cont_Click(object sender, RoutedEventArgs e)
+            {
+
+            }
+
+            private void Tools_Click(object sender, RoutedEventArgs e)
+            {
+
+            }
+
+            private void Planer_Click(object sender, RoutedEventArgs e)
+            {
+
+            }
+
+            private void Progr_Click(object sender, RoutedEventArgs e)
+            {
+
+            }
+
+            private void MyRep_Click(object sender, RoutedEventArgs e)
+            {
+
+            }
+
+            private void ProposProf_Click(object sender, RoutedEventArgs e)
+            {
+
+            }
+
+            private void TaskCur_Click(object sender, RoutedEventArgs e)
+            {
+
+            }
+
+            private void Reg_Click(object sender, RoutedEventArgs e)
+            {
+
+            }
+
+            private void Entr_Click(object sender, RoutedEventArgs e)
+            {
+
+            }
+
+            private void Ext_Click(object sender, RoutedEventArgs e)
+            {
+
+            }
+
+            private void Sett_Click(object sender, RoutedEventArgs e)
+            {
+                Settings modalWindow = new Settings();
+                modalWindow.ShowDialog();
+            }
 
 
         //////////////////////////////
