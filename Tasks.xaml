@@ -1,4 +1,4 @@
-﻿<Window x:Class="Version_4.Tasks"
+﻿<Window x:Class="Version_5.Tasks"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Квести" Height="560" Width="450"
@@ -50,12 +50,16 @@
                 <MenuItem Name="Info" Header="Про виконавця" Click="Info_Click"></MenuItem>
                 <MenuItem Name="FAQ" Header="FAQ" Click="FAQ_Click"></MenuItem>
             </MenuItem>
+
         </Menu>
-        <Menu Grid.Column="2" HorizontalContentAlignment="Center" Height="27" VerticalAlignment="Top">
+        <Menu Name="Menubar2" Grid.Column="2" HorizontalContentAlignment="Center" Height="27" VerticalAlignment="Top">
             <MenuItem Name="Reg" Header="Регістрація" HorizontalAlignment="Right" Margin="0,3,0,0" BorderThickness="0" Click="Reg_Click"/>
             <MenuItem Name="Entr" Header="Вхід" HorizontalAlignment="Right" Margin="0,3,0,0" BorderThickness="0" Click="Entr_Click"/>
-            <MenuItem Name="Ext" Header="Вихід" HorizontalAlignment="Right" BorderThickness="0" Margin="0,3,0,0" Visibility="Hidden" Click="Ext_Click"/>
+            <MenuItem Name="Ext" HorizontalAlignment="Right" BorderThickness="0" Margin="0,3,0,0" Visibility="Hidden" >
+                <MenuItem Header="Вихід" HorizontalAlignment="Right" BorderThickness="0" Margin="0,3,0,0" Click="Ext_Click"/>
+            </MenuItem>
         </Menu>
+        
         <Label Content="Активні завдання:" HorizontalAlignment="Left" Height="30" Margin="10,192,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
         <ComboBox HorizontalAlignment="Left" Height="23" Margin="10,227,0,0" Grid.Row="1" VerticalAlignment="Top" Width="180"/>
         <Button Content="Відкрити" HorizontalAlignment="Left" Margin="10,6,0,10" Grid.Row="2" VerticalContentAlignment="Bottom" Width="100" Click="Button_Click"/>

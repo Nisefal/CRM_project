@@ -13,13 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Version_4
+namespace Version_5
 {
     /// <summary>
     /// Interaction logic for StanTask_1.xaml
     /// </summary>
     public partial class StanTask_1 : Page
     {
+        string res1;
+        string res2;
         public StanTask_1()
         {
             InitializeComponent();
@@ -41,6 +43,12 @@ namespace Version_4
                 else
                     PriceBox.Text = line[0];
             }
+        }
+
+        public task Standart1()
+        {
+            task t1 = new task() { topic = "Здати " + PriceBox.Text + "грн. з ціллю: " + Cont.Text, subtasks=null};
+            return t1;
         }
 
         private void PriceBox_TextChanged(object sender, TextChangedEventArgs e)

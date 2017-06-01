@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Version_4
+namespace Version_5
 {
     /// <summary>
     /// Interaction logic for Info.xaml

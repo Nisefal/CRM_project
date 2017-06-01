@@ -12,8 +12,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
+using System.Data.SqlClient;
+using System.Data;
+using System.Configuration;
+using System.Data.Sql;
 
-namespace Version_4
+namespace Version_5
 {
     /// <summary>
     /// Interaction logic for Planner.xaml
@@ -22,6 +26,9 @@ namespace Version_4
     {
 
         List<Worker> wlist;
+        User CurrentUser;
+        StanTask_1 st1;
+        task tk;
 
         public Planner()
         {
@@ -30,6 +37,17 @@ namespace Version_4
             InitializeComponent();            
             FillWorkers();
         }
+
+        public Planner(User u)
+        {
+            CurrentUser = u;
+            InitPics();
+            SettingsOn();
+            InitializeComponent();
+            InSystem();
+            FillWorkers();
+        }
+
 
         ////////////////////////////////
         ///   BUTTON_CLICK_SECTION   /////////////////////////////////////////////////////////////////////////////
@@ -55,7 +73,7 @@ namespace Version_4
 
         private void Post_Click(object sender, RoutedEventArgs e)
         {
-            PostWin w = new PostWin();
+            PostWin w = new PostWin(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -63,7 +81,7 @@ namespace Version_4
 
         private void Task_Click(object sender, RoutedEventArgs e)
         {
-            Tasks w = new Tasks();
+            Tasks w = new Tasks(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -71,7 +89,7 @@ namespace Version_4
 
         private void Warn_Click(object sender, RoutedEventArgs e)
         {
-            WarnWin w = new WarnWin();
+            WarnWin w = new WarnWin(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -79,7 +97,7 @@ namespace Version_4
 
         private void Propos_Click(object sender, RoutedEventArgs e)
         {
-            Proposition w = new Proposition();
+            Proposition w = new Proposition(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -87,7 +105,7 @@ namespace Version_4
 
         private void Report_Click(object sender, RoutedEventArgs e)
         {
-            Reports w = new Reports();
+            Reports w = new Reports(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -95,7 +113,7 @@ namespace Version_4
 
         private void Cont_Click(object sender, RoutedEventArgs e)
         {
-            Contacts w = new Contacts();
+            Contacts w = new Contacts(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -103,7 +121,7 @@ namespace Version_4
 
         private void Planer_Click(object sender, RoutedEventArgs e)
         {
-            Planner w = new Planner();
+            Planner w = new Planner(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -111,7 +129,7 @@ namespace Version_4
 
         private void Progr_Click(object sender, RoutedEventArgs e)
         {
-            ProgressWin w = new ProgressWin();
+            ProgressWin w = new ProgressWin(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -119,7 +137,7 @@ namespace Version_4
 
         private void MyRep_Click(object sender, RoutedEventArgs e)
         {
-            Reports w = new Reports();
+            Reports w = new Reports(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -127,7 +145,7 @@ namespace Version_4
 
         private void ProposProf_Click(object sender, RoutedEventArgs e)
         {
-            Proposition w = new Proposition();
+            Proposition w = new Proposition(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -135,7 +153,7 @@ namespace Version_4
 
         private void TaskCur_Click(object sender, RoutedEventArgs e)
         {
-            Planner w = new Planner();
+            Planner w = new Planner(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -151,23 +169,34 @@ namespace Version_4
         {
             Logwin entr = new Logwin();
             entr.ShowDialog();
+            Close();
         }
 
         private void Ext_Click(object sender, RoutedEventArgs e)
         {
-            // function enables auto-enter
+            CurrentUser = null;
+
+            FileStream fs = new FileStream("UserInfoLog.txt", FileMode.OpenOrCreate, FileAccess.Write);
+            StreamWriter sw = new StreamWriter(fs);
+            string str = "";
+            sw.WriteLine(str);
+            sw.Close();
+            fs.Close();
+
+            MainWindow w = new MainWindow(CurrentUser);
+            w.Show();
+            Close();
         }
 
         private void Sett_Click(object sender, RoutedEventArgs e)
         {
-            Settings modalWindow = new Settings();
-            modalWindow.ShowDialog();
+            Settings w = new Settings();
+            w.Show();
         }
         private void Info_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow w = new MainWindow();
-            this.Close();
-            w.Show();
+            Info modalWindow = new Info();
+            modalWindow.ShowDialog();
         }
 
         private void FAQ_Click(object sender, RoutedEventArgs e)
@@ -175,18 +204,60 @@ namespace Version_4
 
         }
 
+
         //////////////////////////////
         ///   ALL_INITIALIZATION   /////////////////////////////////////////////////////////////////////////////
         //////////////////////////////
 
-        private void FillWorkers()
+        private void SetUser()
         {
-            wlist = new List<Worker>();
-            //fill list
-            wlist.Add(new Worker("12", "Ivan"));
-            wlist.Add(new Worker("12", "Ravshan"));
-            Workers.ItemsSource = wlist;
+            if (CurrentUser != null && IsInitialized)
+                Ext.Header = CurrentUser.Login;
         }
+
+        private void InSystem()
+        {
+            Disable();
+            HideShow();
+            SetUser();
+        }
+
+        private void Disable()
+        {
+            if (CurrentUser == null && IsInitialized)
+            {
+                MessageBox.Show("Щоб працювати у системі, ви маєту увійти.\nСторінки доступні у режимі перегляду.");
+            }
+        }
+
+        private void HideShow()
+        {
+            if (CurrentUser != null && IsInitialized)
+            {
+                if (CurrentUser.Group == "Викладач")
+                {
+                    StudItem.Visibility = System.Windows.Visibility.Collapsed;
+                    EmissItem.Visibility = System.Windows.Visibility.Collapsed;
+                }
+                else
+                {
+                    if (CurrentUser.spec)
+                    {
+                        StudItem.Visibility = System.Windows.Visibility.Collapsed;
+                        CuraItem.Visibility = System.Windows.Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        EmissItem.Visibility = System.Windows.Visibility.Collapsed;
+                        CuraItem.Visibility = System.Windows.Visibility.Collapsed;
+                    }
+                }
+                Reg.Visibility = System.Windows.Visibility.Collapsed;
+                Entr.Visibility = System.Windows.Visibility.Collapsed;
+                Ext.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
+
 
         private void SettingsOn()
         {
@@ -202,17 +273,48 @@ namespace Version_4
             else this.WindowState = System.Windows.WindowState.Normal;
         }
 
-        private void In(string loginf, string pswrd)
+        private void In()
         {
-
+            StreamReader sr = new StreamReader("UserInfoLog.txt", Encoding.UTF8);
+            string list_stat = sr.ReadToEnd();
+            sr.Dispose();
+            string[] strings = list_stat.Split('\n');
+            strings[1] = strings[1].Split('\r')[0];
+            if (strings.Length > 1)
+                CurrentUser = Logwin.EnterMethod(strings[0], strings[1]);
         }
 
-        private void AutoEnter()
+        private void FillWorkers()
         {
-            if (true)
+            wlist = new List<Worker>();
+            //fill list
+
+            if (CurrentUser != null)
             {
+                SqlConnection connection;
+                SqlCommand cmd;
+                string connectionString = ConfigurationManager.ConnectionStrings["Version_5.Properties.Settings.Prj_DBConnectionString"].ConnectionString;
+
+                string query = "SELECT * FROM Contacts INNER JOIN UserAcc ON Contacts.ContactID = UserAcc.Id WHERE Contacts.Owner = " + CurrentUser.GetId().ToString();// +"AND UserAcc.GroupID =" + CurrentUser.Group;
+                using (connection = new SqlConnection(connectionString))
+                using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
+                {
+                    connection.Open();
+                    cmd = new SqlCommand(query, connection);
+                    DataTable table = new DataTable();
+                    adapter.Fill(table);
+
+                    //get group!!!!!!!!!
+
+                    foreach (DataRow dr in table.Rows)
+                    {
+                        wlist.Add(new Worker(Convert.ToInt32(dr["Id"].ToString()), dr["Name"].ToString()+ " " + dr["SecondName"].ToString()));
+                    }
+                }
 
             }
+
+            Workers.ItemsSource = wlist;
         }
 
         private void InitPics()
@@ -244,15 +346,15 @@ namespace Version_4
         {
             try
             {
-                if (false)
+                if (CurrentUser == null && IsInitialized)
                     throw new Exception();
             }
             catch (Exception)
             {
-                MessageBox.Show("Login to work in system, please!");
+                MessageBox.Show("Увійдіть у систему, щоб працювати!");
             }
 
-            var tb = new TextBox() { Text = "", Width = 190 };
+            TextBox tb = new TextBox() { Text = "", MinWidth = 160, TextWrapping = System.Windows.TextWrapping.Wrap, Margin = new Thickness(5,0,10,0), HorizontalContentAlignment = System.Windows.HorizontalAlignment.Left};
             TaskList.Items.Add(tb);
         }
 
@@ -260,12 +362,12 @@ namespace Version_4
         {
             try
             {
-                if (false)
+                if (CurrentUser == null && IsInitialized)
                     throw new Exception();
             }
             catch (Exception)
             {
-                MessageBox.Show("Login to work in system, please!");
+                MessageBox.Show("Увійдіть у систему, щоб працювати!");
             }
 
             if (TaskList.SelectedIndex >= 0)
@@ -279,50 +381,139 @@ namespace Version_4
         {
             try
             {
-                if (false)
+                if (CurrentUser == null && IsInitialized)
                     throw new Exception();
             }
             catch (Exception)
             {
-                MessageBox.Show("Login to work in system, please!");
+                MessageBox.Show("Увійдіть у систему, щоб працювати!");
             }
 
-            TreeViewItem tv = new TreeViewItem();
-            tv.Header = MLine.Text;
-            foreach (TextBox el in TaskList.Items)
+            tk = new task();
+            tk.subtasks = new List<subtask>();
+            tk.topic = MLine.Text;
+
+            MovInDb(tk);
+        }
+
+
+        private void B2_Click(object sender, RoutedEventArgs e)
+        {
+            string loc = TaskFrame.Content.GetType().ToString().Split('.')[1];
+            if (loc == "StanTask_1")
+                MovInDb(st1.Standart1());
+        }
+
+
+        private void MovInDb(task tl)
+        {
+            int cid = 0;
+            bool lfg = false;
+            foreach (Worker el in Workers.Items)
             {
-                tv.Items.Add(new Label() { Content = el.Text });
+                if (el.flag == true)
+                {
+                    cid = el.RetId();
+                    AddTask(cid, tl);
+                    lfg = true;
+                }
             }
-            Tree.Items.Add(tv);
-            TaskList.Items.Clear();
-            MLine.Text = "";
-        }      
-		
+            if (lfg)
+            {
+                TreeViewItem tv = new TreeViewItem();
+                tv.Header = MLine.Text;
+                foreach (TextBox el in TaskList.Items)
+                {
+                    tv.Items.Add(new Label() { Content = el.Text });
+                    tk.subtasks.Add(new subtask() { id = 0, subt = el.Text });
+                }
+                Tree.Items.Add(tv);
+                TaskList.Items.Clear();
+                MLine.Text = "";
+            }
+            else
+                MessageBox.Show("Оберіть виконавця(-ів)!");
+        }
+
+        private void AddTask(int ui, task tl)
+        {
+            if (CurrentUser != null)
+            {
+                SqlConnection connection;
+                SqlCommand cmd;
+                string connectionString = ConfigurationManager.ConnectionStrings["Version_5.Properties.Settings.Prj_DBConnectionString"].ConnectionString;
+
+                string query = "INSERT INTO TaskTable (Owner, Worker, Topic, Get, Done) VALUES ( @v1, @v2, @v3, 0, 0)";// +CurrentUser.GetId() + ", " + ui.ToString() + ", '" +  + "', " + "1, 0)";// +"AND UserAcc.GroupID =" + CurrentUser.Group;
+                using (connection = new SqlConnection(connectionString))
+                using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
+                {
+                    connection.Open();
+                    cmd = new SqlCommand(query, connection);
+                    cmd.Parameters.AddWithValue("@v1", CurrentUser.GetId());
+                    cmd.Parameters.AddWithValue("@v2", ui);
+                    cmd.Parameters.AddWithValue("@v3", tl.topic);
+                    cmd.ExecuteNonQuery();
+                }
+
+                query = "SELECT * FROM TaskTable";
+
+                using (connection = new SqlConnection(connectionString))
+                using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
+                {
+                    connection.Open();
+
+                    DataTable table = new DataTable();
+                    adapter.Fill(table);
+                    DataRow r = null;
+
+                    foreach (DataRow dr in table.Rows)
+                        r = dr;
+
+                    if (r != null)
+                    {
+                        int subid = Convert.ToInt32(r["Id"].ToString());
+                        if (tl.subtasks != null)
+                            foreach (subtask s in tl.subtasks)
+                            {
+                                query = "INSERT INTO Sub_TaskTable (related, Text, Done) VALUES (@v1, @v2, 0)";
+                                cmd = new SqlCommand(query, connection);
+                                cmd.Parameters.AddWithValue("@v1", subid);
+                                cmd.Parameters.AddWithValue("@v2", s.subt);
+                                cmd.ExecuteNonQuery();
+                            }
+                    }
+                }
+            }
+        }
+
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try 
             {
-                if(false)
+                if(CurrentUser == null && IsInitialized)
                     throw new Exception();
             }
             catch(Exception)
             {
-                MessageBox.Show("Login to work in system, please!");
+                MessageBox.Show("Увійдіть у систему, щоб працювати!");
             }
-
-            TaskFrame.Content = new StanTask_1();
+            if (CB.SelectedIndex == 0)
+            {
+                st1 = new StanTask_1();
+                TaskFrame.Content = st1;
+            }
         }
 
         private void Workers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                if (false)
+                if (CurrentUser == null && IsInitialized)
                     throw new Exception();
             }
             catch (Exception)
             {
-                MessageBox.Show("Login to work in system, please!");
+                MessageBox.Show("Увійдіть у систему, щоб працювати!");
             }
 
             if (Workers.SelectedItems.Count > 0)
@@ -337,32 +528,27 @@ namespace Version_4
         }
 
 
+
+
     }
 
     public class Worker
     {
-        public Worker(string id, string n)
+        public Worker(int id, string n)
         {
             ID = id;
             Name = n;
             flag = false;
         }
 
-        private string ID { get; set; }
+        public int RetId()
+        {
+            return ID;
+        }
+
+        private int ID { get; set; }
         public string Name { get; set; }
         public bool flag { get; set; }
     }
-
-    public class Task
-    {
-        public Task(string main, string[] sub)
-        {
-            this.main = main;
-            subtask = sub;
-        }
-        public string main { get; set; }
-        public string[] subtask { get; set; }
-    }
-
 }
 

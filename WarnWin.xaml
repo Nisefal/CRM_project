@@ -1,4 +1,4 @@
-﻿<Window x:Class="Version_4.WarnWin"
+﻿<Window x:Class="Version_5.WarnWin"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Сповіщення" Height="350" Width="450"
@@ -52,11 +52,14 @@
             </MenuItem>
 
         </Menu>
-        <Menu Grid.Column="2" HorizontalContentAlignment="Center" Height="27" VerticalAlignment="Top">
+        <Menu Name="Menubar2" Grid.Column="2" HorizontalContentAlignment="Center" Height="27" VerticalAlignment="Top">
             <MenuItem Name="Reg" Header="Регістрація" HorizontalAlignment="Right" Margin="0,3,0,0" BorderThickness="0" Click="Reg_Click"/>
             <MenuItem Name="Entr" Header="Вхід" HorizontalAlignment="Right" Margin="0,3,0,0" BorderThickness="0" Click="Entr_Click"/>
-            <MenuItem Name="Ext" Header="Вихід" HorizontalAlignment="Right" BorderThickness="0" Margin="0,3,0,0" Visibility="Hidden" Click="Ext_Click"/>
+            <MenuItem Name="Ext" HorizontalAlignment="Right" BorderThickness="0" Margin="0,3,0,0" Visibility="Hidden" >
+                <MenuItem Header="Вихід" HorizontalAlignment="Right" BorderThickness="0" Margin="0,3,0,0" Click="Ext_Click"/>
+            </MenuItem>
         </Menu>
+        
 
     </Grid>
 

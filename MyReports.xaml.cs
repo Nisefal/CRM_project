@@ -12,37 +12,31 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
-using System.Data.SqlClient;
-using System.Data;
-using System.Configuration;
-using System.Data.Sql;
 
 namespace Version_5
 {
     /// <summary>
-    /// Interaction logic for ProgressWin.xaml
+    /// Interaction logic for MyReports.xaml
     /// </summary>
-    public partial class ProgressWin : Window
+    public partial class MyReports : Window
     {
         User CurrentUser;
 
-        public ProgressWin()
+        public MyReports()
         {
             InitPics();
-            SettingsOn();
             InitializeComponent();
-            FillTreeTask();
+
         }
 
-        public ProgressWin(User u)
+        public MyReports(User u)
         {
             CurrentUser = u;
             InitPics();
-            SettingsOn();
             InitializeComponent();
             InSystem();
-            FillTreeTask();
         }
+
 
 
         ////////////////////////////////
@@ -60,6 +54,7 @@ namespace Version_5
         /////////////////////////////
         ///   FUNCTIONS_SECTION   /////////////////////////////////////////////////////////////////////////////
         /////////////////////////////
+
 
 
 
@@ -201,30 +196,10 @@ namespace Version_5
         }
 
 
+
         //////////////////////////////
         ///   ALL_INITIALIZATION   /////////////////////////////////////////////////////////////////////////////
         //////////////////////////////
-
-        private void FillTreeTask()
-        {
-            if (CurrentUser != null)
-            {
-                SqlConnection connection;
-                string connectionString = ConfigurationManager.ConnectionStrings["Version_5.Properties.Settings.Prj_DBConnectionString"].ConnectionString;
-                string query = "SELECT * FROM Sub_TaskTable";// WHERE Owner =" + CurrentUser.GetId().ToString() + " AND Worker = " + ui.ToString();
-
-                using (connection = new SqlConnection(connectionString))
-                using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
-                {
-                    connection.Open();
-                    DataTable table = new DataTable();
-                    adapter.Fill(table);
-
-                    foreach (DataRow dr in table.Rows)
-                        TaskTree.Items.Add(new TreeViewItem() { Header =  dr["Text"].ToString()});
-                }
-            }
-        }
 
         private void SetUser()
         {
@@ -301,7 +276,6 @@ namespace Version_5
                 CurrentUser = Logwin.EnterMethod(strings[0], strings[1]);
         }
 
-
         private void InitPics()
         {
             try // icon&background&cursor
@@ -310,8 +284,7 @@ namespace Version_5
                 this.Icon = BitmapFrame.Create(iconUri);
                 ImageBrush myBrush = new ImageBrush();
                 myBrush.ImageSource = new BitmapImage(new Uri("./Images/Village.jpg", UriKind.Relative));
-                if(Settings0.Default.Background == "Picture")
-                    this.Background = myBrush;
+                this.Background = myBrush;
                 this.Cursor = new Cursor(Directory.GetCurrentDirectory() + "@/./Images/Pointer_hand.cur");
             }
             catch (System.IO.DirectoryNotFoundException)
@@ -322,8 +295,7 @@ namespace Version_5
                     this.Icon = BitmapFrame.Create(iconUri);
                     ImageBrush myBrush = new ImageBrush();
                     myBrush.ImageSource = new BitmapImage(new Uri("../../Images/Village.jpg", UriKind.Relative));
-                    if(Settings0.Default.Background == "Picture")
-                        this.Background = myBrush;
+                    this.Background = myBrush;
                     this.Cursor = new Cursor(Directory.GetCurrentDirectory() + "@/../../Images/Pointer_hand.cur");
                 }
                 catch (DirectoryNotFoundException)
@@ -332,8 +304,7 @@ namespace Version_5
                     this.Icon = BitmapFrame.Create(iconUri);
                     ImageBrush myBrush = new ImageBrush();
                     myBrush.ImageSource = new BitmapImage(new Uri("../Images/Village.jpg", UriKind.Relative));
-                    if(Settings0.Default.Background == "Picture")
-                        this.Background = myBrush;
+                    this.Background = myBrush;
                     this.Cursor = new Cursor(Directory.GetCurrentDirectory() + "@/../Images/Pointer_hand.cur");
                 }
             }

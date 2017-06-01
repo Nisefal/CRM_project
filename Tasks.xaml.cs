@@ -13,18 +13,31 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
 
-namespace Version_4
+namespace Version_5
 {
     /// <summary>
     /// Interaction logic for Tasks.xaml
     /// </summary>
     public partial class Tasks : Window
     {
+        User CurrentUser;
+        List<task> tk;
+
         public Tasks()
         {
             InitPics();
             SettingsOn();
             InitializeComponent();
+        }
+
+
+        public Tasks(User u)
+        {
+            CurrentUser = u;
+            InitPics();
+            SettingsOn();
+            InitializeComponent();
+            InSystem();
         }
 
 
@@ -52,7 +65,7 @@ namespace Version_4
 
         private void Post_Click(object sender, RoutedEventArgs e)
         {
-            PostWin w = new PostWin();
+            PostWin w = new PostWin(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -60,7 +73,7 @@ namespace Version_4
 
         private void Task_Click(object sender, RoutedEventArgs e)
         {
-            Tasks w = new Tasks();
+            Tasks w = new Tasks(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -68,7 +81,7 @@ namespace Version_4
 
         private void Warn_Click(object sender, RoutedEventArgs e)
         {
-            WarnWin w = new WarnWin();
+            WarnWin w = new WarnWin(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -76,7 +89,7 @@ namespace Version_4
 
         private void Propos_Click(object sender, RoutedEventArgs e)
         {
-            Proposition w = new Proposition();
+            Proposition w = new Proposition(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -84,7 +97,7 @@ namespace Version_4
 
         private void Report_Click(object sender, RoutedEventArgs e)
         {
-            Reports w = new Reports();
+            Reports w = new Reports(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -92,7 +105,7 @@ namespace Version_4
 
         private void Cont_Click(object sender, RoutedEventArgs e)
         {
-            Contacts w = new Contacts();
+            Contacts w = new Contacts(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -100,7 +113,7 @@ namespace Version_4
 
         private void Planer_Click(object sender, RoutedEventArgs e)
         {
-            Planner w = new Planner();
+            Planner w = new Planner(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -108,7 +121,7 @@ namespace Version_4
 
         private void Progr_Click(object sender, RoutedEventArgs e)
         {
-            ProgressWin w = new ProgressWin();
+            ProgressWin w = new ProgressWin(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -116,7 +129,7 @@ namespace Version_4
 
         private void MyRep_Click(object sender, RoutedEventArgs e)
         {
-            Reports w = new Reports();
+            Reports w = new Reports(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -124,7 +137,7 @@ namespace Version_4
 
         private void ProposProf_Click(object sender, RoutedEventArgs e)
         {
-            Proposition w = new Proposition();
+            Proposition w = new Proposition(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -132,7 +145,7 @@ namespace Version_4
 
         private void TaskCur_Click(object sender, RoutedEventArgs e)
         {
-            Planner w = new Planner();
+            Planner w = new Planner(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -148,23 +161,34 @@ namespace Version_4
         {
             Logwin entr = new Logwin();
             entr.ShowDialog();
+            Close();
         }
 
         private void Ext_Click(object sender, RoutedEventArgs e)
         {
-            // function enables auto-enter
+            CurrentUser = null;
+
+            FileStream fs = new FileStream("UserInfoLog.txt", FileMode.OpenOrCreate, FileAccess.Write);
+            StreamWriter sw = new StreamWriter(fs);
+            string str = "";
+            sw.WriteLine(str);
+            sw.Close();
+            fs.Close();
+
+            MainWindow w = new MainWindow(CurrentUser);
+            w.Show();
+            Close();
         }
 
         private void Sett_Click(object sender, RoutedEventArgs e)
         {
-            Settings modalWindow = new Settings();
-            modalWindow.ShowDialog();
+            Settings w = new Settings();
+            w.Show();
         }
         private void Info_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow w = new MainWindow();
-            this.Close();
-            w.Show();
+            Info modalWindow = new Info();
+            modalWindow.ShowDialog();
         }
 
         private void FAQ_Click(object sender, RoutedEventArgs e)
@@ -174,9 +198,60 @@ namespace Version_4
 
 
 
+
         //////////////////////////////
         ///   ALL_INITIALIZATION   /////////////////////////////////////////////////////////////////////////////
         //////////////////////////////
+
+        private void SetUser()
+        {
+            if (CurrentUser != null)
+                Ext.Header = CurrentUser.Login;
+        }
+
+        private void InSystem()
+        {
+            Disable();
+            HideShow();
+            SetUser();
+        }
+
+        private void Disable()
+        {
+            if (CurrentUser == null)
+            {
+                MessageBox.Show("Щоб працювати у системі, ви маєту увійти.\nСторінки доступні у режимі перегляду.");
+            }
+        }
+
+        private void HideShow()
+        {
+            if (CurrentUser != null)
+            {
+                if (CurrentUser.Group == "Викладач")
+                {
+                    StudItem.Visibility = System.Windows.Visibility.Collapsed;
+                    EmissItem.Visibility = System.Windows.Visibility.Collapsed;
+                }
+                else
+                {
+                    if (CurrentUser.spec)
+                    {
+                        StudItem.Visibility = System.Windows.Visibility.Collapsed;
+                        CuraItem.Visibility = System.Windows.Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        EmissItem.Visibility = System.Windows.Visibility.Collapsed;
+                        CuraItem.Visibility = System.Windows.Visibility.Collapsed;
+                    }
+                }
+                Reg.Visibility = System.Windows.Visibility.Collapsed;
+                Entr.Visibility = System.Windows.Visibility.Collapsed;
+                Ext.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
+
 
         private void SettingsOn()
         {
@@ -192,18 +267,17 @@ namespace Version_4
             else this.WindowState = System.Windows.WindowState.Normal;
         }
 
-        private void In(string loginf, string pswrd)
+        private void In()
         {
-
+            StreamReader sr = new StreamReader("UserInfoLog.txt", Encoding.UTF8);
+            string list_stat = sr.ReadToEnd();
+            sr.Dispose();
+            string[] strings = list_stat.Split('\n');
+            strings[1] = strings[1].Split('\r')[0];
+            if (strings.Length > 1)
+                CurrentUser = Logwin.EnterMethod(strings[0], strings[1]);
         }
 
-        private void AutoEnter()
-        {
-            if (true)
-            {
-
-            }
-        }
 
         private void InitPics()
         {
@@ -251,7 +325,7 @@ namespace Version_4
             }
             catch (Exception)
             {
-                MessageBox.Show("Login to work in system, please!");
+                MessageBox.Show("Увійдіть у систему, щоб працювати!");
             }
             //NewTask w = new NewTask();
             //w.Show();
@@ -261,5 +335,18 @@ namespace Version_4
             
             Tree.Items.Add(item);
         }
+    }
+
+    public struct task
+    {
+        public int id { get; set; }
+        public string topic { get; set; }
+        public List<subtask> subtasks { get; set; }
+    }
+
+    public struct subtask
+    {
+        public int id { get; set; }
+        public string subt { get; set; }
     }
 }

@@ -12,27 +12,84 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
+using System.Data.SqlClient;
+using System.Data;
+using System.Configuration;
+using System.Data.Sql;
+using System.Data.SqlClient;
 
-namespace Version_4
+namespace Version_5
 {
     /// <summary>
     /// Interaction logic for PostWin.xaml
     /// </summary>
     public partial class PostWin : Window
     {
+        User CurrentUser;
+
+        SqlConnection connection;
+        SqlCommand cmd;
+        string connectionString = ConfigurationManager.ConnectionStrings["Version_5.Properties.Settings.Prj_DBConnectionString"].ConnectionString;
+        //User u = new User();               
+
         public PostWin()
         {
             InitPics();
             SettingsOn();
             InitializeComponent();
-
+            InitMessages();
         }
+        public PostWin(User u)
+        {
+            CurrentUser = u;
+            InitPics();
+            SettingsOn();
+            InitializeComponent();
+            InSystem();
+            InitMessages();
+        }
+
 
         public PostWin(string name)
         {
             InitPics();
             InitializeComponent();
             Msg.Text = "To " + name + " : ";
+        }
+
+        private void InitMessages()
+        {
+            ///
+            //SqlCeDataAdapter da = new SqlCeDataAdapter();
+            //DataSet ds = new DataSet();
+            //DataTable dt = new DataTable();
+
+            //da.SelectCommand = new SqlCommand(@"SELECT * FROM FooTable", connString);
+            //da.Fill(ds, "FooTable");
+            //dt = ds.Tables["FooTable"];
+            
+            //foreach (DataRow dr in dt.Rows)
+            //{
+            //    MessageBox.Show(dr["Column1"].ToString());
+            //}
+
+            //int rowNum // row number
+            //string columnName = "DepartureTime";  // database table column name
+            //dt.Rows[rowNum][columnName].ToString();
+            ///
+
+            using (connection = new SqlConnection(connectionString))
+            using (SqlDataAdapter adapter = new SqlDataAdapter("SELECT * FROM Chat", connection))
+            {
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                DataGrid g = new DataGrid() { Visibility = System.Windows.Visibility.Collapsed};
+                
+                foreach(DataRow dr in table.Rows)
+                {
+                    MsgList.Items.Add(new Label() { Content = dr["TimE"].ToString() + ":" + dr["Who"].ToString() + ": " + dr["Content"].ToString() });
+                }   
+            }
         }
 
 
@@ -61,7 +118,7 @@ namespace Version_4
 
         private void Post_Click(object sender, RoutedEventArgs e)
         {
-            PostWin w = new PostWin();
+            PostWin w = new PostWin(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -69,7 +126,7 @@ namespace Version_4
 
         private void Task_Click(object sender, RoutedEventArgs e)
         {
-            Tasks w = new Tasks();
+            Tasks w = new Tasks(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -77,7 +134,7 @@ namespace Version_4
 
         private void Warn_Click(object sender, RoutedEventArgs e)
         {
-            WarnWin w = new WarnWin();
+            WarnWin w = new WarnWin(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -85,7 +142,7 @@ namespace Version_4
 
         private void Propos_Click(object sender, RoutedEventArgs e)
         {
-            Proposition w = new Proposition();
+            Proposition w = new Proposition(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -93,7 +150,7 @@ namespace Version_4
 
         private void Report_Click(object sender, RoutedEventArgs e)
         {
-            Reports w = new Reports();
+            Reports w = new Reports(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -101,7 +158,7 @@ namespace Version_4
 
         private void Cont_Click(object sender, RoutedEventArgs e)
         {
-            Contacts w = new Contacts();
+            Contacts w = new Contacts(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -109,7 +166,7 @@ namespace Version_4
 
         private void Planer_Click(object sender, RoutedEventArgs e)
         {
-            Planner w = new Planner();
+            Planner w = new Planner(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -117,7 +174,7 @@ namespace Version_4
 
         private void Progr_Click(object sender, RoutedEventArgs e)
         {
-            ProgressWin w = new ProgressWin();
+            ProgressWin w = new ProgressWin(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -125,7 +182,7 @@ namespace Version_4
 
         private void MyRep_Click(object sender, RoutedEventArgs e)
         {
-            Reports w = new Reports();
+            Reports w = new Reports(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -133,7 +190,7 @@ namespace Version_4
 
         private void ProposProf_Click(object sender, RoutedEventArgs e)
         {
-            Proposition w = new Proposition();
+            Proposition w = new Proposition(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -141,7 +198,7 @@ namespace Version_4
 
         private void TaskCur_Click(object sender, RoutedEventArgs e)
         {
-            Planner w = new Planner();
+            Planner w = new Planner(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -157,24 +214,34 @@ namespace Version_4
         {
             Logwin entr = new Logwin();
             entr.ShowDialog();
+            Close();
         }
 
         private void Ext_Click(object sender, RoutedEventArgs e)
         {
-            // function enables auto-enter
-        }
+            CurrentUser = null;
 
+            FileStream fs = new FileStream("UserInfoLog.txt", FileMode.OpenOrCreate, FileAccess.Write);
+            StreamWriter sw = new StreamWriter(fs);
+            string str = "";
+            sw.WriteLine(str);
+            sw.Close();
+            fs.Close();
+
+            MainWindow w = new MainWindow(CurrentUser);
+            w.Show();
+            Close();
+        }
 
         private void Sett_Click(object sender, RoutedEventArgs e)
         {
-            Settings modalWindow = new Settings();
-            modalWindow.ShowDialog();
+            Settings w = new Settings();
+            w.Show();
         }
         private void Info_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow w = new MainWindow();
-            this.Close();
-            w.Show();
+            Info modalWindow = new Info();
+            modalWindow.ShowDialog();
         }
 
         private void FAQ_Click(object sender, RoutedEventArgs e)
@@ -186,6 +253,55 @@ namespace Version_4
         //////////////////////////////
         ///   ALL_INITIALIZATION   /////////////////////////////////////////////////////////////////////////////
         //////////////////////////////
+
+        private void SetUser()
+        {
+            if (CurrentUser != null)
+                Ext.Header = CurrentUser.Login;
+        }
+
+        private void InSystem()
+        {
+            Disable();
+            HideShow();
+            SetUser();
+        }
+
+        private void Disable()
+        {
+            if (CurrentUser == null)
+            {
+                MessageBox.Show("Щоб працювати у системі, ви маєту увійти.\nСторінки доступні у режимі перегляду.");
+            }
+        }
+
+        private void HideShow()
+        {
+            if (CurrentUser != null)
+            {
+                if (CurrentUser.Group == "Викладач")
+                {
+                    StudItem.Visibility = System.Windows.Visibility.Collapsed;
+                    EmissItem.Visibility = System.Windows.Visibility.Collapsed;
+                }
+                else
+                {
+                    if (CurrentUser.spec)
+                    {
+                        StudItem.Visibility = System.Windows.Visibility.Collapsed;
+                        CuraItem.Visibility = System.Windows.Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        EmissItem.Visibility = System.Windows.Visibility.Collapsed;
+                        CuraItem.Visibility = System.Windows.Visibility.Collapsed;
+                    }
+                }
+                Reg.Visibility = System.Windows.Visibility.Collapsed;
+                Entr.Visibility = System.Windows.Visibility.Collapsed;
+                Ext.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
 
         private void SettingsOn()
         {
@@ -201,6 +317,18 @@ namespace Version_4
             else this.WindowState = System.Windows.WindowState.Normal;
         }
 
+        private void In()
+        {
+            StreamReader sr = new StreamReader("UserInfoLog.txt", Encoding.UTF8);
+            string list_stat = sr.ReadToEnd();
+            sr.Dispose();
+            string[] strings = list_stat.Split('\n');
+            strings[1] = strings[1].Split('\r')[0];
+            if (strings.Length > 1)
+                CurrentUser = Logwin.EnterMethod(strings[0], strings[1]);
+        }
+
+
         private void InitPics()
         {
             try // icon&background&cursor
@@ -208,11 +336,8 @@ namespace Version_4
                 Uri iconUri = new Uri("./Images/Icon.ico", UriKind.RelativeOrAbsolute);
                 this.Icon = BitmapFrame.Create(iconUri);
                 ImageBrush myBrush = new ImageBrush();
-                if (Settings0.Default.Background == "Picture")
-                {
-                    myBrush.ImageSource = new BitmapImage(new Uri("./Images/Village.jpg", UriKind.Relative));
-                    this.Background = myBrush;
-                }
+                myBrush.ImageSource = new BitmapImage(new Uri("./Images/Village.jpg", UriKind.Relative));
+                this.Background = myBrush;
                 this.Cursor = new Cursor(Directory.GetCurrentDirectory() + "@/./Images/Pointer_hand.cur");
             }
             catch (System.IO.DirectoryNotFoundException)
@@ -222,12 +347,8 @@ namespace Version_4
                     Uri iconUri = new Uri("../../Images/Icon.ico", UriKind.RelativeOrAbsolute);
                     this.Icon = BitmapFrame.Create(iconUri);
                     ImageBrush myBrush = new ImageBrush();
-                    
-                    if (Settings0.Default.Background == "Picture")
-                    {
-                        myBrush.ImageSource = new BitmapImage(new Uri("../../Images/Village.jpg", UriKind.Relative));
-                        this.Background = myBrush;
-                    }
+                    myBrush.ImageSource = new BitmapImage(new Uri("../../Images/Village.jpg", UriKind.Relative));
+                    this.Background = myBrush;
                     this.Cursor = new Cursor(Directory.GetCurrentDirectory() + "@/../../Images/Pointer_hand.cur");
                 }
                 catch (DirectoryNotFoundException)
@@ -235,11 +356,8 @@ namespace Version_4
                     Uri iconUri = new Uri("../Images/Icon.ico", UriKind.RelativeOrAbsolute);
                     this.Icon = BitmapFrame.Create(iconUri);
                     ImageBrush myBrush = new ImageBrush();
-                    if (Settings0.Default.Background == "Picture")
-                    {
-                        myBrush.ImageSource = new BitmapImage(new Uri("../Images/Village.jpg", UriKind.Relative));
-                        this.Background = myBrush;
-                    }
+                    myBrush.ImageSource = new BitmapImage(new Uri("../Images/Village.jpg", UriKind.Relative));
+                    this.Background = myBrush;
                     this.Cursor = new Cursor(Directory.GetCurrentDirectory() + "@/../Images/Pointer_hand.cur");
                 }
             }
@@ -259,20 +377,27 @@ namespace Version_4
 
         private void Send_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if(Msg.Text != "" && Msg.Text != "Напишите что-то...")
             {
-                if (false)
-                    throw new Exception();
+                string time = DateTime.Now.ToString(), text = Msg.Text;
+                Label l = new Label() { Content = time  + ":" + CurrentUser.Login + ": " +  text};
+                SolidColorBrush b = new SolidColorBrush(Colors.Yellow);
+                ListBoxItem li = new ListBoxItem();
+                li.Background = b;
+                li.Content = l;
+                MsgList.Items.Add(li);
+                Msg.Text = "";
+
+                string query = "INSERT INTO Chat (Who,TimE,Content) VALUES (@Who,@TimE,@Cont)";
+                connection = new SqlConnection(connectionString);
+                connection.Open();
+                cmd = new SqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@Who", 1);
+                cmd.Parameters.AddWithValue("@TimE", time);
+                cmd.Parameters.AddWithValue("@Cont", text);
+
+                cmd.ExecuteNonQuery();
             }
-            catch (Exception)
-            {
-                MessageBox.Show("Login to work in system, please!");
-            }
-            Label l = new Label() { Content = Msg.Text };
-            SolidColorBrush b = new SolidColorBrush(Colors.Yellow);
-            l.Background = b;
-            MsgList.Items.Add(l);
-            Msg.Text = "";
         }
 
     }

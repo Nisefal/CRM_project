@@ -1,4 +1,4 @@
-﻿<Window x:Class="Version_4.Logwin"
+﻿<Window x:Class="Version_5.Logwin"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Вхід" Height="350" Width="300"
@@ -7,7 +7,6 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <CheckBox Content="Залишатися у системі" HorizontalAlignment="Left" Margin="50,221,0,0" VerticalAlignment="Top" Width="188"/>
         <TextBox Name="LogBox" HorizontalAlignment="Left" Height="30" Margin="24,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="232"/>
         <Label Content="Логін" HorizontalAlignment="Left" Height="25" Margin="24,35,0,0" VerticalAlignment="Top" Width="220" Grid.ColumnSpan="2"/>
         <Label Content="Пароль" HorizontalAlignment="Left" Height="25" Margin="24,114,0,0" VerticalAlignment="Top" Width="220"/>

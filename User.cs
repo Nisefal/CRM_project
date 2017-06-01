@@ -7,31 +7,39 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
 
-namespace Version_4
+namespace Version_5
 {
     public class User
     {
         public static Dictionary<string, User> users = new Dictionary<string, User>();
 
+        private int Id;
         public string Name;
-        public string PhoneNumber;
-        public string DateOfBirth;
-        public string Group;
-        public string Sex;
         public string Login;
+        public string Group;
+        public string NumberInGroup;
+        public string PhoneNumber;
+        public string Email;        
         private string Password;
-        public string Email;
+        public string DateOfBirth;
+        public bool spec;
 
-        public User(string name, string phoneNumber, string dateOfBirth, string group, string sex, string login, string password, string em)
+        public int GetId()
         {
+            return Id;
+        }
+
+        public User(int i, string name, string login, string group, string num, string phone, string em, string password, string date, bool sp)
+        {
+            Id = i;
             Name = name;
-            PhoneNumber = phoneNumber;
-            DateOfBirth = dateOfBirth;
+            PhoneNumber = phone;
             Group = group;
-            Sex = sex;
             Login = login;
             Password = password;
             Email = em;
+            DateOfBirth = date;
+            spec = sp;
         }
 
         public static void AddUser(User user)

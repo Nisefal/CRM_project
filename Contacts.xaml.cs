@@ -12,21 +12,37 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
+using System.Data.SqlClient;
+using System.Data;
+using System.Configuration;
+using System.Data.Sql;
+using System.Threading;
 
-namespace Version_4
+namespace Version_5
 {
     /// <summary>
     /// Interaction logic for Contacts.xaml
     /// </summary>
     public partial class Contacts : Window
     {
+        User CurrentUser;
         List<UserInTable> result = new List<UserInTable>();
         List<UserInTable> toshow;
+        List<UserInTable> selected = new List<UserInTable>();
+
         public Contacts(User u)
         {
+            CurrentUser = u;
             InitPics();
-            InitContacts(u);
+            InitContacts();
+            SettingsOn();
             InitializeComponent();
+            InSystem();
+
+            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 15);
+            dispatcherTimer.Start();
         }
 
         public Contacts()
@@ -35,50 +51,155 @@ namespace Version_4
             SettingsOn();
             InitializeComponent();
         }
+        ////////////////////////////////
+        ///   TIMER_SECTION   /////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////
+
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            result = InitGrid();
+            ModFillGrid();
+            // Forcing the CommandManager to raise the RequerySuggested event
+            CommandManager.InvalidateRequerySuggested();
+        }
 
         ////////////////////////////////
         ///   BUTTON_CLICK_SECTION   /////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////
 
+
+        private void DelC_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsInitialized)
+            {
+                try
+                {
+                    if (CurrentUser == null)
+                        throw new Exception();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Увійдіть у систему, щоб працювати!");
+                }
+
+                if (CurrentUser != null)
+                {
+                    SqlConnection connection;
+                    SqlCommand cmd;
+                    string connectionString = ConfigurationManager.ConnectionStrings["Version_5.Properties.Settings.Prj_DBConnectionString"].ConnectionString;
+
+                    string query = "DELETE FROM Contacts WHERE Owner = " + CurrentUser.GetId().ToString() + " AND ContactID = " + (CDG.SelectedItem as UserInTable).GetId().ToString();
+                    using (connection = new SqlConnection(connectionString))
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
+                    {
+                        connection.Open();
+                        cmd = new SqlCommand(query, connection);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                
+            }
+            
+        }
+
+
+        private void ToCh_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsInitialized)
+            {
+                try
+                {
+                    if (CurrentUser == null)
+                        throw new Exception();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Увійдіть у систему, щоб працювати!");
+                }
+
+                if (CDG.SelectedItems.Count != 0)
+                {
+                    string users = "";
+                    foreach (UserInTable el in CDG.SelectedItems)
+                    {
+                        if (users == "")
+                            users += el.Login;
+                        else
+                            users += ", " + el.Login;
+                    }
+                    PostWin w = new PostWin(users);
+                    w.Show();
+                }
+            }
+        }
+
+        private void AddC_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsInitialized)
+            {
+                try
+                {
+                    if (CurrentUser == null)
+                        throw new Exception();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Увійдіть у систему, щоб працювати!");
+                }
+
+                AddCont w = new AddCont(CurrentUser);
+                w.Show();
+            }
+        }
+
+
         private void CB1_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (IsInitialized)
             {
-                if (false)
-                    throw new Exception();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Login to work in system, please!");
+                try
+                {
+                    if (CurrentUser == null)
+                        throw new Exception();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Увійдіть у систему, щоб працювати!");
+                }
             }
         }
 
         private void CB2_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (IsInitialized)
             {
-                if (false)
-                    throw new Exception();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Login to work in system, please!");
+                try
+                {
+                    if (CurrentUser == null)
+                        throw new Exception();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Увійдіть у систему, щоб працювати!");
+                }
             }
         }
 
         private void CB3_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (IsInitialized)
             {
-                if (false)
-                    throw new Exception();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Login to work in system, please!");
+                try
+                {
+                    if (CurrentUser == null)
+                        throw new Exception();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Увійдіть у систему, щоб працювати!");
+                }
             }
         }
-
 
         ////////////////////////////////
         ///   BUTTON_ENTER_SECTION   /////////////////////////////////////////////////////////////////////////////
@@ -90,43 +211,9 @@ namespace Version_4
         ///   FUNCTIONS_SECTION   /////////////////////////////////////////////////////////////////////////////
         /////////////////////////////
 
-        private void InitContacts(User u)
+        private void InitContacts()
         {
-
-        }
-
-        ///////////////////////////
-        ///   CHECKED_SECTION   /////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////
-
-        private void GB_Checked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (false)
-                    throw new Exception();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Login to work in system, please!");
-            }
-            if(this.IsInitialized)
-                ModFillGrid();
-        }
-
-        private void GB_Unchecked(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (false)
-                    throw new Exception();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Login to work in system, please!");
-            }
-            if(this.IsInitialized)
-                ModFillGrid();
+            result = InitGrid();
         }
 
         private void ModFillGrid()
@@ -148,13 +235,53 @@ namespace Version_4
             CDG.ItemsSource = toshow;
         }
 
+        ///////////////////////////
+        ///   CHECKED_SECTION   /////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////
+
+        private void GB_Checked(object sender, RoutedEventArgs e)
+        {
+            if (IsInitialized)
+            {
+                try
+                {
+                    if (CurrentUser == null)
+                        throw new Exception();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Увійдіть у систему, щоб працювати!");
+                }
+                if (this.IsInitialized)
+                    ModFillGrid();
+            }
+        }
+
+        private void GB_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (IsInitialized)
+            {
+                try
+                {
+                    if (CurrentUser == null)
+                        throw new Exception();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Увійдіть у систему, щоб працювати!");
+                }
+                if (this.IsInitialized)
+                    ModFillGrid();
+            }
+        }
+
         ////////////////////////////////
         ///   MENU_INITS+FUNCTIONS   /////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////
 
         private void Post_Click(object sender, RoutedEventArgs e)
         {
-            PostWin w = new PostWin();
+            PostWin w = new PostWin(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -162,7 +289,7 @@ namespace Version_4
 
         private void Task_Click(object sender, RoutedEventArgs e)
         {
-            Tasks w = new Tasks();
+            Tasks w = new Tasks(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -170,7 +297,7 @@ namespace Version_4
 
         private void Warn_Click(object sender, RoutedEventArgs e)
         {
-            WarnWin w = new WarnWin();
+            WarnWin w = new WarnWin(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -178,7 +305,7 @@ namespace Version_4
 
         private void Propos_Click(object sender, RoutedEventArgs e)
         {
-            Proposition w = new Proposition();
+            Proposition w = new Proposition(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -186,7 +313,7 @@ namespace Version_4
 
         private void Report_Click(object sender, RoutedEventArgs e)
         {
-            Reports w = new Reports();
+            Reports w = new Reports(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -194,7 +321,7 @@ namespace Version_4
 
         private void Cont_Click(object sender, RoutedEventArgs e)
         {
-            Contacts w = new Contacts();
+            Contacts w = new Contacts(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -202,7 +329,7 @@ namespace Version_4
 
         private void Planer_Click(object sender, RoutedEventArgs e)
         {
-            Planner w = new Planner();
+            Planner w = new Planner(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -210,7 +337,7 @@ namespace Version_4
 
         private void Progr_Click(object sender, RoutedEventArgs e)
         {
-            ProgressWin w = new ProgressWin();
+            ProgressWin w = new ProgressWin(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -218,7 +345,7 @@ namespace Version_4
 
         private void MyRep_Click(object sender, RoutedEventArgs e)
         {
-            Reports w = new Reports();
+            Reports w = new Reports(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -226,7 +353,7 @@ namespace Version_4
 
         private void ProposProf_Click(object sender, RoutedEventArgs e)
         {
-            Proposition w = new Proposition();
+            Proposition w = new Proposition(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -234,7 +361,7 @@ namespace Version_4
 
         private void TaskCur_Click(object sender, RoutedEventArgs e)
         {
-            Planner w = new Planner();
+            Planner w = new Planner(CurrentUser);
             App.Current.MainWindow = w;
             this.Close();
             w.Show();
@@ -250,24 +377,34 @@ namespace Version_4
         {
             Logwin entr = new Logwin();
             entr.ShowDialog();
+            Close();
         }
 
         private void Ext_Click(object sender, RoutedEventArgs e)
         {
-            // function enables auto-enter
+            CurrentUser = null;
+
+            FileStream fs = new FileStream("UserInfoLog.txt", FileMode.OpenOrCreate, FileAccess.Write);
+            StreamWriter sw = new StreamWriter(fs);
+            string str = "";
+            sw.WriteLine(str);
+            sw.Close();
+            fs.Close();
+
+            MainWindow w = new MainWindow(CurrentUser);
+            w.Show();
+            Close();
         }
 
         private void Sett_Click(object sender, RoutedEventArgs e)
         {
-            Settings modalWindow = new Settings();
-            modalWindow.ShowDialog();
+            Settings w = new Settings();
+            w.Show();
         }
-
         private void Info_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow w = new MainWindow();
-            this.Close();
-            w.Show();
+            Info modalWindow = new Info();
+            modalWindow.ShowDialog();
         }
 
         private void FAQ_Click(object sender, RoutedEventArgs e)
@@ -276,9 +413,60 @@ namespace Version_4
         }
 
 
+
         //////////////////////////////
         ///   ALL_INITIALIZATION   /////////////////////////////////////////////////////////////////////////////
         //////////////////////////////
+
+        private void SetUser()
+        {
+            if (CurrentUser != null)
+                Ext.Header = CurrentUser.Login;
+        }
+
+        private void InSystem()
+        {
+            Disable();
+            HideShow();
+            SetUser();
+        }
+
+        private void Disable()
+        {
+            if (CurrentUser == null)
+            {
+                MessageBox.Show("Щоб працювати у системі, ви маєту увійти.\nСторінки доступні у режимі перегляду.");
+            }
+        }
+
+        private void HideShow()
+        {
+            if (CurrentUser != null)
+            {
+                if (CurrentUser.Group == "Викладач")
+                {
+                    StudItem.Visibility = System.Windows.Visibility.Collapsed;
+                    EmissItem.Visibility = System.Windows.Visibility.Collapsed;
+                }
+                else
+                {
+                    if (CurrentUser.spec)
+                    {
+                        StudItem.Visibility = System.Windows.Visibility.Collapsed;
+                        CuraItem.Visibility = System.Windows.Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        EmissItem.Visibility = System.Windows.Visibility.Collapsed;
+                        CuraItem.Visibility = System.Windows.Visibility.Collapsed;
+                    }
+                }
+                Reg.Visibility = System.Windows.Visibility.Collapsed;
+                Entr.Visibility = System.Windows.Visibility.Collapsed;
+                Ext.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
+
 
         private void SettingsOn()
         {
@@ -294,19 +482,6 @@ namespace Version_4
             else this.WindowState = System.Windows.WindowState.Normal;
         }
 
-        private void In(string loginf, string pswrd)
-        {
-
-        }
-
-        private void AutoEnter()
-        {
-            if (true)
-            {
-
-            }
-        }
-
         private void InitPics()
         {
             try // icon&background&cursor
@@ -315,7 +490,7 @@ namespace Version_4
                 this.Icon = BitmapFrame.Create(iconUri);
                 ImageBrush myBrush = new ImageBrush();
                 myBrush.ImageSource = new BitmapImage(new Uri("./Images/Village.jpg", UriKind.Relative));
-                if(Settings0.Default.Background == "Picture")
+                if (Settings0.Default.Background == "Picture")
                     this.Background = myBrush;
                 this.Cursor = new Cursor(Directory.GetCurrentDirectory() + "@/./Images/Pointer_hand.cur");
             }
@@ -344,119 +519,119 @@ namespace Version_4
             }
         }
 
-        private void ToCh_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (false)
-                    throw new Exception();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Login to work in system, please!");
-            }
-
-            if (CDG.SelectedItems.Count != 0)
-            {
-                string users = "";
-                foreach (UserInTable el in CDG.SelectedItems)
-                {
-                        if (users == "")
-                            users += el.Login;
-                        else
-                            users += ", " + el.Login;
-                }
-                PostWin w = new PostWin(users);
-                w.Show();
-            }
-        }
 
         private List<UserInTable> InitGrid()
         {
             List<UserInTable> tb = new List<UserInTable>();
-            //...
-            //...
-            //...
+            if (CurrentUser != null)
+            {
+                SqlConnection connection;
+                SqlCommand cmd;
+                string connectionString = ConfigurationManager.ConnectionStrings["Version_5.Properties.Settings.Prj_DBConnectionString"].ConnectionString;
+
+                string query = "SELECT * FROM Contacts INNER JOIN UserAcc ON Contacts.ContactID = UserAcc.Id WHERE Contacts.Owner = " + CurrentUser.GetId().ToString();
+                using (connection = new SqlConnection(connectionString))
+                using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
+                {
+                    connection.Open();
+                    cmd = new SqlCommand(query, connection);
+                    cmd.Parameters.AddWithValue("@l", CurrentUser.GetId());
+                    DataTable table = new DataTable();
+                    adapter.Fill(table);
+
+                    //get group!!!!!!!!!
+
+                    foreach (DataRow dr in table.Rows)
+                    {
+                        tb.Add(new UserInTable(Convert.ToInt32(dr["Id"].ToString()), dr["Name"].ToString() + " " + dr["Secondname"].ToString(), dr["telephone_number"].ToString(), dr["dateOf"].ToString(), dr["groupID"].ToString(), dr["ulogin"].ToString(), dr["e_mail"].ToString(), dr["spec"].ToString()));
+                    }
+                }
+            }
             return tb;
         }
 
         private void CDG_Loaded(object sender, RoutedEventArgs e)
         {
-            //init list from contacts
-            //foreach...
-            //--- delete after include SQL
-            //result.Add(new UserInTable("Ivan Prohorov", "0675549163", "20.11.1998", "IS52", "M", "IvaPro", "ivapro@gmail.compot"));
-           // result.Add(new UserInTable("Sasha Gray", "0635241422", "11.07.1997", "IS42", "W", "SasaG", "someGray@gmail.aud"));
-            //result.Add(new UserInTable("Iliya Vatutin", "0635241422", "11.07.1997", "IS42", "M", "Fantomas777", "someGray@gmail.aud"));
-            //--- delete after include SQL
-            result = InitGrid();
-            CDG.ItemsSource = result;
+            if (IsInitialized)
+            {
+                CDG.ItemsSource = result;
+            }
         }
 
         private void CDG_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            try
+            if (IsInitialized)
             {
-                if (false)
-                    throw new Exception();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Login to work in system, please!");
-            }
+                try
+                {
+                    if (CurrentUser == null)
+                        throw new Exception();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Увійдіть у систему, щоб працювати!");
+                }
 
-            if (ShowOnClick.IsChecked == true)
-            {
-                UserInTable path = CDG.SelectedItem as UserInTable;
-                MessageBox.Show("FIO: " + path.Name + "\nNumber: " + path.PhoneNumber + "\nDate of birth: " + path.DateOfBirth + "\nGroup: " + path.Group + "\nLogin: " + path.Login + "\nEmail: " + path.Email);
+                if (ShowOnClick.IsChecked == true)
+                {
+                    UserInTable path = CDG.SelectedItem as UserInTable;
+
+                    /// REDOOOOOOOOOOOOOOOOOOOOO!
+
+                    MessageBox.Show("FIO: " + path.Name + "\nNumber: " + path.PhoneNumber + "\nDate of birth: " + path.DateOfBirth + "\nGroup: " + path.Group + "\nLogin: " + path.Login + "\nEmail: " + path.Email);
+                }
+                else
+
+                    if (selected.Contains(CDG.SelectedItem as UserInTable))
+                    {
+                        selected.Remove(CDG.SelectedItem as UserInTable);
+                    }
+                    else
+                    {
+                        selected.Add(CDG.SelectedItem as UserInTable);
+                    }
+                CDG.SelectedItems.Clear();
+                foreach (var el in selected)
+                    CDG.SelectedItems.Add(el);
             }
+        
         }
 
-
-        public class UserInTable
+        private void CDG_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            public string Name { get; set; }
-            public string PhoneNumber { get; set; }
-            public string DateOfBirth { get; set; }
-            public string Group { get; set; }
-            public string Sex { get; set; }
-            public string Login { get; set; }
-            public string Email { get; set; }
-            public string Spec { get; private set; }
 
-            public UserInTable(string name, string phoneNumber, string dateOfBirth, string group, string sex, string login, string em, string prof)
-            {
-                Name = name;
-                PhoneNumber = phoneNumber;
-                DateOfBirth = dateOfBirth;
-                Group = group;
-                Sex = sex;
-                Login = login;
-                Email = em;
-                if(prof == "p")
-                    Spec = "Proforg";
-            }
         }
 
-        private void AddC_Click(object sender, RoutedEventArgs e)
+    }
+
+
+    public class UserInTable
+    {
+        private int Id;
+        public string Name { get; set; }
+        public string PhoneNumber { get; set; }
+        public string DateOfBirth { get; set; }
+        public string Group { get; set; }
+        public string Login { get; set; }
+        public string Email { get; set; }
+        public string Spec { get; private set; }
+
+        public UserInTable(int i, string name, string phoneNumber, string dateOfBirth, string group, string login, string em, string prof)
         {
-            try
-            {
-                if (false)
-                    throw new Exception();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Login to work in system, please!");
-            }
-
-            //find in window+select+add contact
-            result.Add(new UserInTable("Sasha Pupkin", "0635241422", "11.07.1997", "IS42", "M", "Eizenhorn", "someGray@gmail.aud", "p"));
-            result.Add(new UserInTable("Sasha Knopkin", "0635241422", "11.07.1997", "IS42", "M", "Eizenhorn", "someGray@gmail.aud", "n"));
-            //add new user
-            CDG.ItemsSource = null;
-            CDG.ItemsSource = result;
+            Id = i;
+            Name = name;
+            PhoneNumber = phoneNumber;
+            DateOfBirth = dateOfBirth;
+            Group = group;
+            Login = login;
+            Email = em;
+            if (prof == "True")
+                Spec = "Профорг";
         }
 
+        public int GetId()
+        {
+            return Id;
+        }
     }
 }
