@@ -1,11 +1,9 @@
-﻿<Window x:Class="Version_1.WarnWin"
+﻿<Window x:Class="Version_3.WarnWin"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Сповіщення" Height="350" Width="450"
         MinHeight="350" MinWidth="450">
 
-    <!--    ../Images/             
-                !-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="29*"/>
@@ -15,9 +13,9 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50*"/>
             <ColumnDefinition Width="111*"/>
-            <ColumnDefinition Width="60*"/>
+            <ColumnDefinition Width="120"/>
         </Grid.ColumnDefinitions>
-        <Menu Name="Menubar" HorizontalContentAlignment="Center" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="27">
+        <Menu Name="Menubar" HorizontalContentAlignment="Center" VerticalAlignment="Top" Height="27" Grid.ColumnSpan="2">
             <MenuItem Name="StudItem" Header="Студент" HorizontalAlignment="Left" Margin="0,3,0,0">
                 <MenuItem Name="Post" Header="Пошта" HorizontalAlignment="Right" Width="178" Click="Post_Click"/>
                 <MenuItem Name="Task" Header="Завдання" Click="Task_Click"></MenuItem>
@@ -28,9 +26,9 @@
                 <MenuItem Header="" IsEnabled="False"></MenuItem>
                 <MenuItem Name="Sett" Header="Налаштування..." Click="Sett_Click"></MenuItem>
             </MenuItem>
-            <MenuItem Name="EmissItem" Header="Профорг" HorizontalAlignment="Left" Margin="0,3,0,0" >
+            <MenuItem Name="EmissItem" Header="Профорг" HorizontalAlignment="Left" Margin="0,3,0,0">
                 <MenuItem Name="Post1" Header="Пошта" Click="Post_Click"></MenuItem>
-                <MenuItem Name="Tools" Header="Інструментарій" Click="Tools_Click">
+                <MenuItem Name="Tools" Header="Інструментарій">
                     <MenuItem Name="Planer" Header="Планувальник" Click="Planer_Click"></MenuItem>
                     <MenuItem Name="Progr" Header="Прогресс" Click="Progr_Click"></MenuItem>
                     <MenuItem Name="MyRep" Header="Мої звіти" Click="MyRep_Click"></MenuItem>
@@ -47,6 +45,10 @@
                 <MenuItem Name="Cont2" Header="Контакти" Click="Cont_Click"></MenuItem>
                 <MenuItem Header="" IsEnabled="False"></MenuItem>
                 <MenuItem Name="Sett3" Header="Налаштування..."  Click="Sett_Click"></MenuItem>
+            </MenuItem>
+            <MenuItem Name="Opt" Header="Додатково" HorizontalAlignment="Left" BorderThickness="0" Margin="0,3,0,0">
+                <MenuItem Name="Info" Header="Про виконавця" Click="Info_Click"></MenuItem>
+                <MenuItem Name="FAQ" Header="FAQ" Click="FAQ_Click"></MenuItem>
             </MenuItem>
 
         </Menu>

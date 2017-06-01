@@ -16,17 +16,16 @@ using System.IO;
 namespace Version_3
 {
     /// <summary>
-    /// Interaction logic for Tasks.xaml
+    /// Interaction logic for Planner.xaml
     /// </summary>
-    public partial class Tasks : Window
+    public partial class Planner : Window
     {
-        public Tasks()
+        public Planner()
         {
             InitPics();
             SettingsOn();
             InitializeComponent();
         }
-
 
         ////////////////////////////////
         ///   BUTTON_CLICK_SECTION   /////////////////////////////////////////////////////////////////////////////
@@ -162,8 +161,7 @@ namespace Version_3
         }
         private void Info_Click(object sender, RoutedEventArgs e)
         {
-            Info modalWindow = new Info();
-            modalWindow.ShowDialog();
+
         }
 
         private void FAQ_Click(object sender, RoutedEventArgs e)
@@ -210,10 +208,6 @@ namespace Version_3
             {
                 Uri iconUri = new Uri("./Images/Icon.ico", UriKind.RelativeOrAbsolute);
                 this.Icon = BitmapFrame.Create(iconUri);
-                ImageBrush myBrush = new ImageBrush();
-                myBrush.ImageSource = new BitmapImage(new Uri("./Images/Village.jpg", UriKind.Relative));
-                if(Settings0.Default.Background == "Picture")
-                    this.Background = myBrush;
                 this.Cursor = new Cursor(Directory.GetCurrentDirectory() + "@/./Images/Pointer_hand.cur");
             }
             catch (System.IO.DirectoryNotFoundException)
@@ -222,34 +216,44 @@ namespace Version_3
                 {
                     Uri iconUri = new Uri("../../Images/Icon.ico", UriKind.RelativeOrAbsolute);
                     this.Icon = BitmapFrame.Create(iconUri);
-                    ImageBrush myBrush = new ImageBrush();
-                    myBrush.ImageSource = new BitmapImage(new Uri("../../Images/Village.jpg", UriKind.Relative));
-                    if(Settings0.Default.Background == "Picture")
-                        this.Background = myBrush;
                     this.Cursor = new Cursor(Directory.GetCurrentDirectory() + "@/../../Images/Pointer_hand.cur");
                 }
                 catch (DirectoryNotFoundException)
                 {
                     Uri iconUri = new Uri("../Images/Icon.ico", UriKind.RelativeOrAbsolute);
                     this.Icon = BitmapFrame.Create(iconUri);
-                    ImageBrush myBrush = new ImageBrush();
-                    myBrush.ImageSource = new BitmapImage(new Uri("../Images/Village.jpg", UriKind.Relative));
-                    if(Settings0.Default.Background == "Picture")
-                        this.Background = myBrush;
                     this.Cursor = new Cursor(Directory.GetCurrentDirectory() + "@/../Images/Pointer_hand.cur");
                 }
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AddT_Click(object sender, RoutedEventArgs e)
         {
-            //NewTask w = new NewTask();
-            //w.Show();
-            var items = Tree.Items;
-            ListBoxItem item = new ListBoxItem();
-            item.Content = new Button() {Width = 100, Height = 30, Content="Somebutton"};
-            
-            Tree.Items.Add(item);
+            var tb = new TextBox() { Text = "", Width = 190 };
+            //ListBoxItem i = new ListBoxItem();
+            //i.Content = tb;
+            TaskList.Items.Add(tb);
         }
+
+        private void DelT_Click(object sender, RoutedEventArgs e)
+        {
+            if(TaskList.SelectedIndex>=0)
+                TaskList.Items.Remove(TaskList.SelectedItem);
+        }
+
+        private void B1_Click(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem tv = new TreeViewItem();
+            tv.Header = MLine.Text;
+            foreach (TextBox el in TaskList.Items)
+            {
+                tv.Items.Add(new Label() { Content = el.Text });
+            }
+            Tree.Items.Add(tv);
+            TaskList.Items.Clear();
+            MLine.Text = "";
+        }
+
+
     }
 }

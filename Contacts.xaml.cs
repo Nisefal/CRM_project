@@ -16,22 +16,43 @@ using System.IO;
 namespace Version_3
 {
     /// <summary>
-    /// Interaction logic for Tasks.xaml
+    /// Interaction logic for Contacts.xaml
     /// </summary>
-    public partial class Tasks : Window
+    public partial class Contacts : Window
     {
-        public Tasks()
+        List<UserInTable> result;
+        public Contacts(User u)
+        {
+            InitPics();
+            InitContacts(u);
+            InitializeComponent();
+        }
+
+        public Contacts()
         {
             InitPics();
             SettingsOn();
             InitializeComponent();
         }
 
-
         ////////////////////////////////
         ///   BUTTON_CLICK_SECTION   /////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////
 
+        private void CB1_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CB2_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CB3_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
 
         ////////////////////////////////
@@ -44,7 +65,24 @@ namespace Version_3
         ///   FUNCTIONS_SECTION   /////////////////////////////////////////////////////////////////////////////
         /////////////////////////////
 
+        private void InitContacts(User u)
+        {
 
+        }
+
+        ///////////////////////////
+        ///   CHECKED_SECTION   /////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////
+
+        private void GB_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void GB_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+        }
 
         ////////////////////////////////
         ///   MENU_INITS+FUNCTIONS   /////////////////////////////////////////////////////////////////////////////
@@ -160,17 +198,16 @@ namespace Version_3
             Settings modalWindow = new Settings();
             modalWindow.ShowDialog();
         }
+
         private void Info_Click(object sender, RoutedEventArgs e)
         {
-            Info modalWindow = new Info();
-            modalWindow.ShowDialog();
+
         }
 
         private void FAQ_Click(object sender, RoutedEventArgs e)
         {
 
         }
-
 
 
         //////////////////////////////
@@ -224,7 +261,7 @@ namespace Version_3
                     this.Icon = BitmapFrame.Create(iconUri);
                     ImageBrush myBrush = new ImageBrush();
                     myBrush.ImageSource = new BitmapImage(new Uri("../../Images/Village.jpg", UriKind.Relative));
-                    if(Settings0.Default.Background == "Picture")
+                    if (Settings0.Default.Background == "Picture")
                         this.Background = myBrush;
                     this.Cursor = new Cursor(Directory.GetCurrentDirectory() + "@/../../Images/Pointer_hand.cur");
                 }
@@ -234,22 +271,92 @@ namespace Version_3
                     this.Icon = BitmapFrame.Create(iconUri);
                     ImageBrush myBrush = new ImageBrush();
                     myBrush.ImageSource = new BitmapImage(new Uri("../Images/Village.jpg", UriKind.Relative));
-                    if(Settings0.Default.Background == "Picture")
+                    if (Settings0.Default.Background == "Picture")
                         this.Background = myBrush;
                     this.Cursor = new Cursor(Directory.GetCurrentDirectory() + "@/../Images/Pointer_hand.cur");
                 }
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ToCh_Click(object sender, RoutedEventArgs e)
         {
-            //NewTask w = new NewTask();
-            //w.Show();
-            var items = Tree.Items;
-            ListBoxItem item = new ListBoxItem();
-            item.Content = new Button() {Width = 100, Height = 30, Content="Somebutton"};
-            
-            Tree.Items.Add(item);
+            if (CDG.SelectedItems.Count != 0)
+            {
+                string users = "";
+                foreach (UserInTable el in CDG.SelectedItems)
+                {
+                        if (users == "")
+                            users += el.Login;
+                        else
+                            users += ", " + el.Login;
+                }
+                PostWin w = new PostWin(users);
+                w.Show();
+            }
         }
+
+        private List<UserInTable> InitGrid()
+        {
+            List<UserInTable> tb = new List<UserInTable>();
+            //...
+            //...
+            //...
+            return tb;
+        }
+
+        private void CDG_Loaded(object sender, RoutedEventArgs e)
+        {
+            //init list from contacts
+            //foreach...
+            //--- delete after include SQL
+            //result.Add(new UserInTable("Ivan Prohorov", "0675549163", "20.11.1998", "IS52", "M", "IvaPro", "ivapro@gmail.compot"));
+           // result.Add(new UserInTable("Sasha Gray", "0635241422", "11.07.1997", "IS42", "W", "SasaG", "someGray@gmail.aud"));
+            //result.Add(new UserInTable("Iliya Vatutin", "0635241422", "11.07.1997", "IS42", "M", "Fantomas777", "someGray@gmail.aud"));
+            //--- delete after include SQL
+            result = InitGrid();
+            CDG.ItemsSource = result;
+        }
+
+        private void CDG_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (ShowOnClick.IsChecked == true)
+            {
+                UserInTable path = CDG.SelectedItem as UserInTable;
+                MessageBox.Show("FIO: " + path.Name + "\nNumber: " + path.PhoneNumber + "\nDate of birth: " + path.DateOfBirth + "\nGroup: " + path.Group + "\nLogin: " + path.Login + "\nEmail: " + path.Email);
+            }
+        }
+
+
+        public class UserInTable
+        {
+            public string Name { get; set; }
+            public string PhoneNumber { get; set; }
+            public string DateOfBirth { get; set; }
+            public string Group { get; set; }
+            public string Sex { get; set; }
+            public string Login { get; set; }
+            public string Email { get; set; }
+
+            public UserInTable(string name, string phoneNumber, string dateOfBirth, string group, string sex, string login, string em)
+            {
+                Name = name;
+                PhoneNumber = phoneNumber;
+                DateOfBirth = dateOfBirth;
+                Group = group;
+                Sex = sex;
+                Login = login;
+                Email = em;
+            }
+        }
+
+        private void AddC_Click(object sender, RoutedEventArgs e)
+        {
+            //find in window+select+add contact
+            result.Add(new UserInTable("Sasha Pupkin", "0635241422", "11.07.1997", "IS42", "M", "Eizenhorn", "someGray@gmail.aud"));
+            //add new user
+            CDG.ItemsSource = null;
+            CDG.ItemsSource = result;
+        }
+
     }
 }

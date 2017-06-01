@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
 
-namespace Version_1
+namespace Version_3
 {
     /// <summary>
     /// Interaction logic for NewTask.xaml
@@ -24,7 +24,6 @@ namespace Version_1
         {
             InitPics();
             InitializeComponent();
-
         }
 
         public NewTask(string st1, string st2)
@@ -67,26 +66,131 @@ namespace Version_1
         ///   MENU_INITS+FUNCTIONS   /////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////
 
-        private void StudItem_Click(object sender, RoutedEventArgs e)
+        private void Post_Click(object sender, RoutedEventArgs e)
         {
-
+            PostWin w = new PostWin();
+            App.Current.MainWindow = w;
+            this.Close();
+            w.Show();
         }
+
+        private void Task_Click(object sender, RoutedEventArgs e)
+        {
+            Tasks w = new Tasks();
+            App.Current.MainWindow = w;
+            this.Close();
+            w.Show();
+        }
+
+        private void Warn_Click(object sender, RoutedEventArgs e)
+        {
+            WarnWin w = new WarnWin();
+            App.Current.MainWindow = w;
+            this.Close();
+            w.Show();
+        }
+
+        private void Propos_Click(object sender, RoutedEventArgs e)
+        {
+            Proposition w = new Proposition();
+            App.Current.MainWindow = w;
+            this.Close();
+            w.Show();
+        }
+
+        private void Report_Click(object sender, RoutedEventArgs e)
+        {
+            Reports w = new Reports();
+            App.Current.MainWindow = w;
+            this.Close();
+            w.Show();
+        }
+
+        private void Cont_Click(object sender, RoutedEventArgs e)
+        {
+            Contacts w = new Contacts();
+            App.Current.MainWindow = w;
+            this.Close();
+            w.Show();
+        }
+
+        private void Planer_Click(object sender, RoutedEventArgs e)
+        {
+            Planner w = new Planner();
+            App.Current.MainWindow = w;
+            this.Close();
+            w.Show();
+        }
+
+        private void Progr_Click(object sender, RoutedEventArgs e)
+        {
+            ProgressWin w = new ProgressWin();
+            App.Current.MainWindow = w;
+            this.Close();
+            w.Show();
+        }
+
+        private void MyRep_Click(object sender, RoutedEventArgs e)
+        {
+            Reports w = new Reports();
+            App.Current.MainWindow = w;
+            this.Close();
+            w.Show();
+        }
+
+        private void ProposProf_Click(object sender, RoutedEventArgs e)
+        {
+            Proposition w = new Proposition();
+            App.Current.MainWindow = w;
+            this.Close();
+            w.Show();
+        }
+
+        private void TaskCur_Click(object sender, RoutedEventArgs e)
+        {
+            Planner w = new Planner();
+            App.Current.MainWindow = w;
+            this.Close();
+            w.Show();
+        }
+
+        private void Reg_Click(object sender, RoutedEventArgs e)
+        {
+            Registr w = new Registr();
+            w.ShowDialog();
+        }
+
+        private void Entr_Click(object sender, RoutedEventArgs e)
+        {
+            Logwin entr = new Logwin();
+            entr.ShowDialog();
+        }
+
+        private void Ext_Click(object sender, RoutedEventArgs e)
+        {
+            // function enables auto-enter
+        }
+
 
         private void Sett_Click(object sender, RoutedEventArgs e)
         {
             Settings modalWindow = new Settings();
             modalWindow.ShowDialog();
         }
-
-        private void EmissItem_Click(object sender, RoutedEventArgs e)
+        private void Info_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
+        private void FAQ_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
         //////////////////////////////
         ///   ALL_INITIALIZATION   /////////////////////////////////////////////////////////////////////////////
         //////////////////////////////
+
         private void InitPics()
         {
             try // icon&background&cursor

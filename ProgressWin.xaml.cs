@@ -16,17 +16,17 @@ using System.IO;
 namespace Version_3
 {
     /// <summary>
-    /// Interaction logic for Tasks.xaml
+    /// Interaction logic for ProgressWin.xaml
     /// </summary>
-    public partial class Tasks : Window
+    public partial class ProgressWin : Window
     {
-        public Tasks()
+        public ProgressWin()
         {
             InitPics();
             SettingsOn();
             InitializeComponent();
-        }
 
+        }
 
         ////////////////////////////////
         ///   BUTTON_CLICK_SECTION   /////////////////////////////////////////////////////////////////////////////
@@ -176,7 +176,6 @@ namespace Version_3
         //////////////////////////////
         ///   ALL_INITIALIZATION   /////////////////////////////////////////////////////////////////////////////
         //////////////////////////////
-
         private void SettingsOn()
         {
             if (Settings0.Default.FontColor == "Black")
@@ -239,17 +238,6 @@ namespace Version_3
                     this.Cursor = new Cursor(Directory.GetCurrentDirectory() + "@/../Images/Pointer_hand.cur");
                 }
             }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //NewTask w = new NewTask();
-            //w.Show();
-            var items = Tree.Items;
-            ListBoxItem item = new ListBoxItem();
-            item.Content = new Button() {Width = 100, Height = 30, Content="Somebutton"};
-            
-            Tree.Items.Add(item);
         }
     }
 }
