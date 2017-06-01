@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
 
-namespace Version_3
+namespace Version_4
 {
     /// <summary>
     /// Interaction logic for Registr.xaml
@@ -23,9 +23,8 @@ namespace Version_3
         public Registr()
         {
             InitPics();
-            InitializeComponent();
             SettingsOn();
-            this.Show();
+            InitializeComponent();
         }
 
 

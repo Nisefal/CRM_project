@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
 
-namespace Version_3
+namespace Version_4
 {
     /// <summary>
     /// Interaction logic for PostWin.xaml
@@ -172,7 +172,9 @@ namespace Version_3
         }
         private void Info_Click(object sender, RoutedEventArgs e)
         {
-
+            MainWindow w = new MainWindow();
+            this.Close();
+            w.Show();
         }
 
         private void FAQ_Click(object sender, RoutedEventArgs e)
@@ -257,6 +259,15 @@ namespace Version_3
 
         private void Send_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (false)
+                    throw new Exception();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Login to work in system, please!");
+            }
             Label l = new Label() { Content = Msg.Text };
             SolidColorBrush b = new SolidColorBrush(Colors.Yellow);
             l.Background = b;

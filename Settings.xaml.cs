@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
 
-namespace Version_3
+namespace Version_4
 {
     /// <summary>
     /// Interaction logic for Settings.xaml
@@ -26,9 +26,10 @@ namespace Version_3
         {
             p1 = new Settings1();
             p2 = new Settings2();
-            InitSettings();
             InitPics();
             InitializeComponent();
+            InitSettings();
+            p1.FColor.Items.Refresh();
         }
 
 
@@ -37,7 +38,7 @@ namespace Version_3
         ////////////////////////////////
         private void Move_Click(object sender, RoutedEventArgs e)
         {
-            if(Rect.Content.ToString() == "Version_3.Settings1")
+            if(Rect.Content.ToString() == "Version_4.Settings1")
             {
                 Rect.Content = p2;
             }

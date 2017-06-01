@@ -1,4 +1,4 @@
-﻿<Window x:Class="Version_3.Proposition"
+﻿<Window x:Class="Version_4.Proposition"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Пропозиції" Height="350" Width="450"

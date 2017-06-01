@@ -1,22 +1,22 @@
-﻿<Window x:Class="Version_3.Planner"
+﻿<Window x:Class="Version_4.Planner"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Планувальник" Height="370" Width="450"
-        MinWidth="450" MinHeight="370">
+        Title="Планувальник" MinHeight="370" MinWidth="620" Height="370" Width="620">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="33"/>
-            <RowDefinition Height="111"/>
+            <RowDefinition Height="83"/>
             <RowDefinition/>
-            <RowDefinition Height="46"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="225"/>
+            <ColumnDefinition Width="194"/>
             <ColumnDefinition/>
+            <ColumnDefinition Width="42"/>
             <ColumnDefinition Width="120"/>
         </Grid.ColumnDefinitions>
-        <Menu Name="Menubar" HorizontalContentAlignment="Center" VerticalAlignment="Top" Height="27" Grid.ColumnSpan="2">
+        <Menu Name="Menubar" HorizontalContentAlignment="Center" VerticalAlignment="Top" Height="27" Grid.ColumnSpan="3">
             <MenuItem Name="StudItem" Header="Студент" HorizontalAlignment="Left" Margin="0,3,0,0">
                 <MenuItem Name="Post" Header="Пошта" HorizontalAlignment="Right" Width="178" Click="Post_Click"/>
                 <MenuItem Name="Task" Header="Завдання" Click="Task_Click"></MenuItem>
@@ -52,21 +52,56 @@
                 <MenuItem Name="FAQ" Header="FAQ" Click="FAQ_Click"></MenuItem>
             </MenuItem>
         </Menu>
-        <Menu Grid.Column="2" HorizontalContentAlignment="Center" Height="27" VerticalAlignment="Top">
+        <Menu Grid.Column="3" HorizontalContentAlignment="Center" Height="27" VerticalAlignment="Top">
             <MenuItem Name="Reg" Header="Регістрація" HorizontalAlignment="Right" Margin="0,3,0,0" BorderThickness="0" Click="Reg_Click"/>
             <MenuItem Name="Entr" Header="Вхід" HorizontalAlignment="Right" Margin="0,3,0,0" BorderThickness="0" Click="Entr_Click"/>
             <MenuItem Name="Ext" Header="Вихід" HorizontalAlignment="Right" BorderThickness="0" Margin="0,3,0,0" Visibility="Hidden" Click="Ext_Click"/>
         </Menu>
-        <Button Name="B1" Content="Дати завдання" HorizontalAlignment="Left" Margin="10,10,0,10" Grid.Row="3" VerticalContentAlignment="Bottom" Width="100" Grid.Column="2" Click="B1_Click"/>
-        <TreeView Name="Tree" Grid.ColumnSpan="2" Grid.Column="1" HorizontalContentAlignment="Left" Margin="5,4,10,10" Grid.Row="2" VerticalContentAlignment="Top"/>
-        <Label Content="Заголовок" HorizontalAlignment="Left" Height="29" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="180"/>
-        <Label Content="Задачі" HorizontalAlignment="Left" Height="30" Margin="10,80,0,0" Grid.Row="1" VerticalAlignment="Top" Width="180"/>
-        <Button Name="AddT" Content="Додати задачу" HorizontalAlignment="Left" Height="26" Margin="10,10,0,0" Grid.Row="3" VerticalAlignment="Top" Width="100" Click="AddT_Click"/>
-        <ListBox Name="TaskList" HorizontalContentAlignment="Left" Margin="10,4,0,10" Grid.Row="2" VerticalContentAlignment="Top"/>
-        <TextBox Name="MLine" HorizontalAlignment="Left" Height="31" Margin="10,44,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="180"/>
-        <Button Name="DelT" Content="Видалити задачу" Height="26" Margin="115,10,10,0" Grid.Row="3" VerticalAlignment="Top" Click="DelT_Click"/>
-        <ListBox Name="Workers" Grid.ColumnSpan="2" Grid.Column="1" HorizontalContentAlignment="Left" Height="57" Margin="10,44,10,0" Grid.Row="1" VerticalAlignment="Top"/>
-        <Label Grid.ColumnSpan="2" Content="Виконавці" Grid.Column="1" HorizontalContentAlignment="Left" Height="34" Margin="10,5,10,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <TreeView Name="Tree" Grid.Column="2" HorizontalContentAlignment="Left" Margin="9,44,10,10" Grid.Row="1" VerticalContentAlignment="Top"  Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+        <DataGrid Name="Workers"  ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Left" Margin="10,44,5,10" Grid.Row="1" VerticalContentAlignment="Top" Grid.RowSpan="3" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="Workers_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn IsReadOnly="True" Header="Ім'я" Binding="{Binding Name}" Width="150"/>
+                <DataGridCheckBoxColumn Header="" Binding="{Binding flag}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label Content="Виконавці" HorizontalAlignment="Left" Height="29" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="161"/>
+        <TabControl HorizontalContentAlignment="Left" Margin="0,32,0,0" Grid.RowSpan="3" VerticalContentAlignment="Top" Grid.Column="1">
+            <TabItem Header="Користувацькі">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="41"/>
+                        <RowDefinition Height="34*"/>
+                        <RowDefinition Height="29"/>
+                        <RowDefinition Height="127*"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="53*"/>
+                        <ColumnDefinition Width="54*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="DelT" Content="Видалити задачу" Height="26" Margin="4,4,0,0" VerticalAlignment="Top" Click="DelT_Click" Grid.Column="1" Grid.Row="4"/>
+                    <ListBox x:Name="TaskList" HorizontalContentAlignment="Left" Margin="5,5,10,1" VerticalContentAlignment="Top" Grid.ColumnSpan="2" Grid.Row="3"/>
+                    <TextBox x:Name="MLine" HorizontalAlignment="Left" Height="31" Margin="5,2,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="228" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="2"/>
+                    <Button x:Name="AddT" Content="Додати задачу" HorizontalAlignment="Left" Margin="5,4,0,5" VerticalContentAlignment="Top" Click="AddT_Click" Width="100" Grid.Row="4"/>
+                    <Label Content="Задачі" HorizontalAlignment="Left" Height="30" Margin="5,4,0,0" VerticalAlignment="Top" Width="199" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="2"/>
+                    <Label Content="Заголовок" HorizontalAlignment="Left" Height="29" Margin="5,9,0,0" VerticalAlignment="Top" Width="199" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Стандартні">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Тип задачі:" HorizontalAlignment="Left" Height="26" Margin="10,10,0,0" VerticalAlignment="Top" Width="194"/>
+                    <ComboBox Name="CB" HorizontalContentAlignment="Left" Height="26" Margin="10,41,10,0" VerticalAlignment="Top" SelectionChanged="ComboBox_SelectionChanged">
+                        <ComboBoxItem Content="Збір грошей"/>
+                    </ComboBox>
+                    <Frame HorizontalContentAlignment="Left" VerticalContentAlignment="Top" Name="TaskFrame" Margin="10,72,10,10"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Label Content="Прогресс:" HorizontalAlignment="Left" Height="29" Margin="10,10,-9,0" Grid.Row="1" VerticalAlignment="Top" Width="161" Grid.ColumnSpan="2" Grid.Column="2"/>
+        <Button x:Name="B1" Content="Відправити" HorizontalContentAlignment="Center" Margin="10,5,10,10" VerticalContentAlignment="Center" Click="B1_Click" Grid.Column="1" Grid.Row="3"/>
 
     </Grid>
 

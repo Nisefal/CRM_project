@@ -1,0 +1,27 @@
+﻿<Page x:Class="Version_4.StanTask_1"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d"
+	Title="" Height="121" Width="225">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="83"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="80"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="39"/>
+            <RowDefinition/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="0*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Кількість грн.: " HorizontalAlignment="Left" Height="25" Margin="0,4,0,0" VerticalAlignment="Top" Grid.Row="2" Width="88" Grid.ColumnSpan="2" />
+        <TextBox HorizontalContentAlignment="Left" Margin="10,4,10,1" TextWrapping="Wrap" Text="В ім'я доброго добра!" VerticalContentAlignment="Top" Grid.ColumnSpan="3" Grid.Row="1"/>
+        <Label Content="Причина: " HorizontalAlignment="Left" Height="25" Margin="0,10,0,0" VerticalAlignment="Top" Width="65" />
+        <Slider Name="Slide" Minimum="2" Maximum="40" HorizontalContentAlignment="Left" Margin="6,5,10,1" VerticalContentAlignment="Top" Grid.Row="2" Grid.Column="1" ValueChanged="Slide_ValueChanged"/>
+        <TextBox Name="PriceBox" HorizontalContentAlignment="Left" Height="25" Margin="6,4,10,0" TextWrapping="Wrap" Text="2" VerticalAlignment="Top" Grid.Row="2" Grid.Column="2" TextChanged="PriceBox_TextChanged" LostFocus="PriceBox_LostFocus"/>
+    </Grid>
+</Page>

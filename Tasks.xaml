@@ -1,4 +1,4 @@
-﻿<Window x:Class="Version_3.Tasks"
+﻿<Window x:Class="Version_4.Tasks"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Квести" Height="560" Width="450"
@@ -62,9 +62,7 @@
         <Label Content="Нові завдання:" HorizontalAlignment="Left" Height="30" Margin="10,255,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
         <ListBox HorizontalAlignment="Left" Margin="10,290,0,11" Grid.Row="1" VerticalContentAlignment="Top" Width="180"/>
         <Calendar HorizontalAlignment="Left" Height="177" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="180"/>
-        <TreeView Name="Tree" Grid.ColumnSpan="2" Grid.Column="1" HorizontalAlignment="Left" Height="477" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="222" Grid.RowSpan="2">
-
-        </TreeView>
+        <TreeView Name="Tree" Grid.ColumnSpan="2" Grid.Column="1" HorizontalAlignment="Left" Height="436" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="222"/>
 
     </Grid>
 

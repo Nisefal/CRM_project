@@ -13,18 +13,22 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
 
-namespace Version_3
+namespace Version_4
 {
     /// <summary>
     /// Interaction logic for Planner.xaml
     /// </summary>
     public partial class Planner : Window
     {
+
+        List<Worker> wlist;
+
         public Planner()
         {
             InitPics();
             SettingsOn();
-            InitializeComponent();
+            InitializeComponent();            
+            FillWorkers();
         }
 
         ////////////////////////////////
@@ -161,7 +165,9 @@ namespace Version_3
         }
         private void Info_Click(object sender, RoutedEventArgs e)
         {
-
+            MainWindow w = new MainWindow();
+            this.Close();
+            w.Show();
         }
 
         private void FAQ_Click(object sender, RoutedEventArgs e)
@@ -169,11 +175,18 @@ namespace Version_3
 
         }
 
-
-
         //////////////////////////////
         ///   ALL_INITIALIZATION   /////////////////////////////////////////////////////////////////////////////
         //////////////////////////////
+
+        private void FillWorkers()
+        {
+            wlist = new List<Worker>();
+            //fill list
+            wlist.Add(new Worker("12", "Ivan"));
+            wlist.Add(new Worker("12", "Ravshan"));
+            Workers.ItemsSource = wlist;
+        }
 
         private void SettingsOn()
         {
@@ -229,20 +242,51 @@ namespace Version_3
 
         private void AddT_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (false)
+                    throw new Exception();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Login to work in system, please!");
+            }
+
             var tb = new TextBox() { Text = "", Width = 190 };
-            //ListBoxItem i = new ListBoxItem();
-            //i.Content = tb;
             TaskList.Items.Add(tb);
         }
 
         private void DelT_Click(object sender, RoutedEventArgs e)
         {
-            if(TaskList.SelectedIndex>=0)
+            try
+            {
+                if (false)
+                    throw new Exception();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Login to work in system, please!");
+            }
+
+            if (TaskList.SelectedIndex >= 0)
                 TaskList.Items.Remove(TaskList.SelectedItem);
+            else
+                if (TaskList.Items.Count > 0)
+                    TaskList.Items.RemoveAt(TaskList.Items.Count - 1);
         }
 
         private void B1_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (false)
+                    throw new Exception();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Login to work in system, please!");
+            }
+
             TreeViewItem tv = new TreeViewItem();
             tv.Header = MLine.Text;
             foreach (TextBox el in TaskList.Items)
@@ -252,8 +296,73 @@ namespace Version_3
             Tree.Items.Add(tv);
             TaskList.Items.Clear();
             MLine.Text = "";
+        }      
+		
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try 
+            {
+                if(false)
+                    throw new Exception();
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Login to work in system, please!");
+            }
+
+            TaskFrame.Content = new StanTask_1();
+        }
+
+        private void Workers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (false)
+                    throw new Exception();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Login to work in system, please!");
+            }
+
+            if (Workers.SelectedItems.Count > 0)
+            {
+                if (wlist[Workers.SelectedIndex].flag != true)
+                    wlist[Workers.SelectedIndex].flag = true;
+                else
+                    wlist[Workers.SelectedIndex].flag = false;
+                Workers.Items.Refresh();
+                Workers.SelectedItem = null;
+            }
         }
 
 
     }
+
+    public class Worker
+    {
+        public Worker(string id, string n)
+        {
+            ID = id;
+            Name = n;
+            flag = false;
+        }
+
+        private string ID { get; set; }
+        public string Name { get; set; }
+        public bool flag { get; set; }
+    }
+
+    public class Task
+    {
+        public Task(string main, string[] sub)
+        {
+            this.main = main;
+            subtask = sub;
+        }
+        public string main { get; set; }
+        public string[] subtask { get; set; }
+    }
+
 }
+

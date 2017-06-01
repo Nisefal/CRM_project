@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
 
-namespace Version_3
+namespace Version_4
 {
     public class User
     {
@@ -36,21 +36,21 @@ namespace Version_3
 
         public static void AddUser(User user)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                string sqlExpression = @"INSERT INTO Users (Login, Name, PhoneNumber, DateOfBirth, Sex, Password) 
-                    VALUES (@login, @name, @phoneNumber, @dateOfBirth, @sex, @password)";
-                connection.Open();
-                SqlCommand command = new SqlCommand(sqlExpression, connection);
-                command.Parameters.AddWithValue("@login", user.Login);
-                command.Parameters.AddWithValue("@name", user.Name);
-                command.Parameters.AddWithValue("@phoneNumber", user.PhoneNumber);
-                command.Parameters.AddWithValue("@dateOfBirth", user.DateOfBirth);
-                command.Parameters.AddWithValue("@sex", user.Sex);
-                command.Parameters.AddWithValue("@password", user.Password);
-                command.ExecuteNonQuery();
-            }
+//            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+//            using (SqlConnection connection = new SqlConnection(connectionString))
+//            {
+//                string sqlExpression = @"INSERT INTO Users (Login, Name, PhoneNumber, DateOfBirth, Sex, Password) 
+//                    VALUES (@login, @name, @phoneNumber, @dateOfBirth, @sex, @password)";
+//                connection.Open();
+//                SqlCommand command = new SqlCommand(sqlExpression, connection);
+//                command.Parameters.AddWithValue("@login", user.Login);
+//                command.Parameters.AddWithValue("@name", user.Name);
+//                command.Parameters.AddWithValue("@phoneNumber", user.PhoneNumber);
+//                command.Parameters.AddWithValue("@dateOfBirth", user.DateOfBirth);
+//                command.Parameters.AddWithValue("@sex", user.Sex);
+//                command.Parameters.AddWithValue("@password", user.Password);
+//                command.ExecuteNonQuery();
+//            }
         }
 
         public string GetPassword()
@@ -61,26 +61,26 @@ namespace Version_3
         public static User GetUserByLogin(string login)
         {
             User user = null;
-            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                string sqlExpression = "SELECT * FROM Users WHERE @login = Login";
-                connection.Open();
-                SqlCommand command = new SqlCommand(sqlExpression, connection);
-                command.Parameters.AddWithValue("@login", login);
+//            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+//            using (SqlConnection connection = new SqlConnection(connectionString))
+//            {
+//                string sqlExpression = "SELECT * FROM Users WHERE @login = Login";
+//                connection.Open();
+//                SqlCommand command = new SqlCommand(sqlExpression, connection);
+//                command.Parameters.AddWithValue("@login", login);
 
-                SqlDataReader reader = command.ExecuteReader();
+//                SqlDataReader reader = command.ExecuteReader();
 
-                if (reader.HasRows)
-                {
-                    reader.Read();
-//                    user = new User(reader.GetValue(1).ToString(), reader.GetValue(2).ToString(),
- //                       reader.GetValue(3).ToString(), reader.GetValue(4).ToString(),
-  //                      reader.GetValue(0).ToString(), reader.GetValue(5).ToString());
-                }
+//                if (reader.HasRows)
+//                {
+//                    reader.Read();
+////                    user = new User(reader.GetValue(1).ToString(), reader.GetValue(2).ToString(),
+// //                       reader.GetValue(3).ToString(), reader.GetValue(4).ToString(),
+//  //                      reader.GetValue(0).ToString(), reader.GetValue(5).ToString());
+//                }
 
-                return user;
-            }
+            return user;
+//            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<Window x:Class="Version_3.PostWin"
+﻿<Window x:Class="Version_4.PostWin"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Пошта" Height="350" Width="450"

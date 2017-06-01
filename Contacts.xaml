@@ -1,8 +1,8 @@
-﻿<Window x:Class="Version_3.Contacts"
+﻿<Window x:Class="Version_4.Contacts"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Контакти" Height="350" Width="450"
-        MinHeight="350" MinWidth="450">
+        Title="Контакти" Height="350" Width="860"
+        MinHeight="350" MinWidth="860">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -59,7 +59,7 @@
             <MenuItem Name="Entr" Header="Вхід" HorizontalAlignment="Right" Margin="0,3,0,0" BorderThickness="0" Click="Entr_Click"/>
             <MenuItem Name="Ext" Header="Вихід" HorizontalAlignment="Right" BorderThickness="0" Margin="0,3,0,0" Visibility="Hidden" Click="Ext_Click"/>
         </Menu>
-        <GroupBox Header="Вивід" HorizontalContentAlignment="Left" Margin="10,10,157,10" Grid.Row="1" VerticalContentAlignment="Top" Grid.ColumnSpan="2">
+        <GroupBox Header="Вивід" HorizontalAlignment="Left" Height="140" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="147">
             <StackPanel HorizontalAlignment="Left" Height="120" Margin="0,10,0,-12" VerticalAlignment="Top" Width="129">
                 <CheckBox Name="GB1" IsChecked="True" Content="Студенти" HorizontalAlignment="Left" Height="20" Width="129" Checked="GB_Checked" Unchecked="GB_Unchecked"/>
                 <CheckBox Name="GB2" IsChecked="True" Content="Куратори" HorizontalAlignment="Left" Height="20" Width="129" Checked="GB_Checked" Unchecked="GB_Unchecked"/>
@@ -67,7 +67,18 @@
                 <CheckBox x:Name="ShowOnClick" HorizontalAlignment="Left" Height="37" Margin="0,10,0,0" VerticalAlignment="Top" Width="119" Content="Інфо при &#xA;натисканні"/>
             </StackPanel>
         </GroupBox>
-        <DataGrid Name="CDG" IsReadOnly="True" Grid.ColumnSpan="2" Grid.Column="1" HorizontalContentAlignment="Left" Margin="10" Grid.Row="1" Grid.RowSpan="3" VerticalContentAlignment="Top" ScrollViewer.CanContentScroll="True" Loaded="CDG_Loaded" MouseUp="CDG_MouseUp"/>
+        <DataGrid Name="CDG" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Left" Margin="10,44,5,10" Grid.Row="1" VerticalContentAlignment="Top" Grid.RowSpan="3" ItemsSource="{Binding}" AutoGenerateColumns="False" IsReadOnly="True" Grid.ColumnSpan="2" Grid.Column="1" Loaded="CDG_Loaded" MouseUp="CDG_MouseUp">
+            <DataGrid.Columns>
+                <DataGridTextColumn IsReadOnly="True" Header="ФІП" Binding="{Binding Name}" Width="*" MinWidth="100"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Телефон" Binding="{Binding PhoneNumber}" Width="80" MinWidth="80"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Дата нар." Binding="{Binding DateOfBirth}" Width="70"  MinWidth="70"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Група" Binding="{Binding Group}" Width="50" MinWidth="50"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Стать" Binding="{Binding Sex}" Width="40"  MinWidth="40"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Логін" Binding="{Binding Login}" Width="*" MinWidth="100"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Електронна скринька" Binding="{Binding Email}" Width="*" MinWidth="150"/>
+                <DataGridTextColumn IsReadOnly="True" Header="Спеціальне" Binding="{Binding Spec}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
         <Button Name="ToCh" Content="До чату" HorizontalAlignment="Left" Height="30" Margin="10,3,0,0" Grid.Row="2" VerticalAlignment="Top" Width="147" Click="ToCh_Click"/>
         <Button Name="DelC" Content="Видалити контакт" HorizontalAlignment="Left" Height="20" Margin="10,38,0,0" Grid.Row="2" VerticalAlignment="Top" Width="147"/>
         <Button Name="AddC" Content="Додати контакт" HorizontalAlignment="Left" Height="20" Margin="10,63,0,0" Grid.Row="2" VerticalAlignment="Top" Width="147" Click="AddC_Click"/>

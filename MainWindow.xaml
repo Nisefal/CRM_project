@@ -1,4 +1,4 @@
-﻿<Window x:Class="Version_3.MainWindow"
+﻿<Window x:Class="Version_4.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Головна" Height="350" Width="450"
@@ -7,13 +7,13 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="29*"/>
-            <RowDefinition Height="184"/>
-            <RowDefinition Height="107*"/>
+            <RowDefinition Height="182"/>
+            <RowDefinition Height="109*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="277*"/>
-            <ColumnDefinition Width="45*"/>
+            <ColumnDefinition Width="272"/>
+            <ColumnDefinition/>
             <ColumnDefinition Width="120"/>
         </Grid.ColumnDefinitions>
         <Menu Name="Menubar" HorizontalContentAlignment="Center" VerticalAlignment="Top" Height="27" Grid.ColumnSpan="2">
@@ -62,9 +62,10 @@
         <StackPanel Grid.ColumnSpan="2" Background="White" HorizontalAlignment="Left" Height="123" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="277">
             <TextBlock HorizontalAlignment="Left" Height="25" Margin="0,0,-237,0" TextWrapping="Wrap" Text="Відомості про автора" VerticalAlignment="Top" Width="374"/>
             <TextBlock HorizontalAlignment="Left" Height="40" TextWrapping="Wrap" Text="Тема: Автоматизоване робоче місце (CRM система ВНЗ) профорга групи  " VerticalAlignment="Top" Width="277"/>
-            <Label Content="Версія №3" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="129"/>
+            <Label Content="Версія №4" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="129"/>
             <TextBlock HorizontalAlignment="Left" Height="40" Margin="0,0,-14,0" TextWrapping="Wrap" Text="Виконав: студент групи ІС-53 Богданенко Микола" VerticalAlignment="Top" Width="151" RenderTransformOrigin="1.325,-0.2"/>
         </StackPanel>
+
     </Grid>
 
 </Window>

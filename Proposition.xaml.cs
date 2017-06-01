@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
 
-namespace Version_3
+namespace Version_4
 {
     /// <summary>
     /// Interaction logic for Proposition.xaml
@@ -35,7 +35,15 @@ namespace Version_3
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            try
+            {
+                if (false)
+                    throw new Exception();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Login to work in system, please!");
+            }
         }
 
         private void Comm_FocusableChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -193,7 +201,9 @@ namespace Version_3
         }
         private void Info_Click(object sender, RoutedEventArgs e)
         {
-
+            MainWindow w = new MainWindow();
+            this.Close();
+            w.Show();
         }
 
         private void FAQ_Click(object sender, RoutedEventArgs e)

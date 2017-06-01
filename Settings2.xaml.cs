@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Version_3
+namespace Version_4
 {
     /// <summary>
     /// Interaction logic for Settings2.xaml

@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
 
-namespace Version_3
+namespace Version_4
 {
     /// <summary>
     /// Interaction logic for NewTask.xaml
@@ -179,7 +179,9 @@ namespace Version_3
         }
         private void Info_Click(object sender, RoutedEventArgs e)
         {
-
+            MainWindow w = new MainWindow();
+            this.Close();
+            w.Show();
         }
 
         private void FAQ_Click(object sender, RoutedEventArgs e)
@@ -225,5 +227,31 @@ namespace Version_3
             }
         }
 
+        private void Enter_Click(object sender, RoutedEventArgs e)
+        {
+            if(Good.IsChecked==true)
+            {
+                MessageBox.Show("Приємно мати справу з розумною людиною!");
+                //add task
+            }
+            else
+            {
+                if(Neutral.IsChecked==true)
+                {
+                    MessageBox.Show("Домовитись... Отак зразу.");
+                    ///
+                }
+                else
+                {
+                    if(Bad.IsChecked == true)
+                    {
+                        MessageBox.Show("У нас тут не демократія.");
+                        Good.IsChecked = true;
+                    }
+                    else
+                        MessageBox.Show("Оберіть варіант!");
+                }
+            }
+        }
     }
 }

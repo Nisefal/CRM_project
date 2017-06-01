@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
 
-namespace Version_3
+namespace Version_4
 {
     /// <summary>
     /// Interaction logic for ProgressWin.xaml
@@ -162,8 +162,9 @@ namespace Version_3
         }
         private void Info_Click(object sender, RoutedEventArgs e)
         {
-            Info modalWindow = new Info();
-            modalWindow.ShowDialog();
+            MainWindow w = new MainWindow();
+            this.Close();
+            w.Show();
         }
 
         private void FAQ_Click(object sender, RoutedEventArgs e)

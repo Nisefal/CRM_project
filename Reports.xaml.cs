@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
 
-namespace Version_3
+namespace Version_4
 {
     /// <summary>
     /// Interaction logic for Reports.xaml
@@ -27,12 +27,67 @@ namespace Version_3
             InitializeComponent();
         }
 
+        List<ForDatagrid> result;
+
         ////////////////////////////////
         ///   BUTTON_CLICK_SECTION   /////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////
 
+        private void Plus_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (false)
+                    throw new Exception();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Login to work in system, please!");
+            }
 
+            //find in window+select+add contact
+            if (result == null)
+            {
+                result = new List<ForDatagrid>();
+                //result.Add(new ForDatagrid("", "", ""));
+            }
+            else
+                result.Add(new ForDatagrid("", "", ""));
+            //add new user
+            //RepGrid.Items.Add(new { what = "", price = "", number = "" });
+            RepGrid.ItemsSource = null;
+            RepGrid.ItemsSource = result;
+        }
+        private void Minus_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (false)
+                    throw new Exception();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Login to work in system, please!");
+            }
 
+            if (RepGrid.SelectedItems.Count > 0)
+            {
+                RepGrid.Items.Remove(RepGrid.SelectedItem);
+            }
+        }
+
+        private void Convert(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (false)
+                    throw new Exception();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Login to work in system, please!");
+            }
+        }
         ////////////////////////////////
         ///   BUTTON_ENTER_SECTION   /////////////////////////////////////////////////////////////////////////////
         ////////////////////////////////
@@ -43,6 +98,11 @@ namespace Version_3
         ///   FUNCTIONS_SECTION   /////////////////////////////////////////////////////////////////////////////
         /////////////////////////////
 
+        private void InitGrid()
+        {
+            List<ForDatagrid> res = new List<ForDatagrid>();
+            RepGrid.ItemsSource = res;
+        }
 
 
         ////////////////////////////////
@@ -162,7 +222,9 @@ namespace Version_3
         }
         private void Info_Click(object sender, RoutedEventArgs e)
         {
-
+            MainWindow w = new MainWindow();
+            this.Close();
+            w.Show();
         }
 
         private void FAQ_Click(object sender, RoutedEventArgs e)
@@ -225,5 +287,20 @@ namespace Version_3
                 }
             }
         }
+    }
+	
+	
+    public class ForDatagrid
+    {
+        public string what { get; set;}
+        public string price {get;set;}
+        public string number {get;set;}
+        public ForDatagrid(string w, string p, string n)
+        {
+            what = w;
+            price = p;
+            number = n;
+        }
+        public ForDatagrid() { }
     }
 }
